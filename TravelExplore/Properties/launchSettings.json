@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "TravelExplore (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "TravelExplore (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
