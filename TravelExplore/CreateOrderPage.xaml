@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="TravelExplore.CreateOrderPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:TravelExplore"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel>
+            <Button x:Name="BackButton" Click="BackButton_Click"
+                Style="{StaticResource NavigationBackButtonNormalStyle}"
+                IsEnabled="{x:Bind Frame.CanGoBack, Mode=OneWay}" 
+                ToolTipService.ToolTip="Back"/>
+
+            <TextBlock x:Name="pageTitle" Text="Create offer"
+                Margin="16" Style="{StaticResource TitleTextBlockStyle}"/>
+
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <StackPanel>
+                        <TextBlock Text="Customer info" Style="{StaticResource TitleTextBlockStyle}"/>
+                        <RelativePanel>
+                            <TextBox x:Name="Name" Header= "Name" Margin="0,24,0,0" MaxLength="32" Width="188" HorizontalAlignment="Left" InputScope="PersonalFullName"/>
+                            <TextBox x:Name="Surname" Header= "Surname" Margin="24,24,0,0" MaxLength="32" Width="188" HorizontalAlignment="Right" InputScope="PersonalFullName" RelativePanel.RightOf="Name"/>
+                        </RelativePanel>
+                        <TextBox x:Name="PhoneNumber" Header="Phone Number" Margin="0,24,0,0" MaxLength="15" Width="400" HorizontalAlignment="Left" InputScope="TelephoneNumber" />
+                        <TextBox x:Name="Email" Header="Email" Margin="0,24,0,0" MaxLength="50" Width="400" HorizontalAlignment="Left" InputScope="EmailNameOrAddress" />
+                        <TextBox x:Name="Address" Header="Address" PlaceholderText="Address" Margin="0,24,0,0" MaxLength="50" Width="400" HorizontalAlignment="Left" InputScope="EmailNameOrAddress" />
+                        <RelativePanel>
+                            <TextBox x:Name="City" PlaceholderText="City" Margin="0,24,0,0" MaxLength="50" Width="200" HorizontalAlignment="Left" InputScope="EmailNameOrAddress" />
+                            <TextBox x:Name="ZipCode" PlaceholderText="Zip Code" Margin="24,24,0,0" MaxLength="6" Width="100" HorizontalAlignment="Left" InputScope="Number" RelativePanel.RightOf="City" />
+                        </RelativePanel>
+                    </StackPanel>
+                    <StackPanel Margin="24,0,0,0">
+                        <TextBlock Text="Order info" Style="{StaticResource TitleTextBlockStyle}"/>
+                        <DatePicker x:Name="ArrivalDatePicker" Header="Arrival" Margin="0,24,0,0" Width="400" HorizontalAlignment="Left" SelectedDateChanged="arrivalDatePicker_SelectedDateChanged" />
+                        <TextBox x:Name="AddressOfDeparture" Header="Departure" PlaceholderText="Address" Margin="0,24,0,0" MaxLength="50" Width="400" HorizontalAlignment="Left" InputScope="EmailNameOrAddress" />
+                        <DatePicker x:Name="DepartureDatePicker" Margin="0,24,0,0" Width="400 " HorizontalAlignment="Left"  />
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Content="Save" Margin="0,24" Click="SaveButton_Click"/>
+                    <Button Content="Cancel" Margin="24" Click="CancelButton_Click"/>
+                </StackPanel>
+            </StackPanel>
+
+        </StackPanel>
+    </Grid>
+</Page>

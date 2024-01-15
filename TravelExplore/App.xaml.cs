@@ -42,9 +42,39 @@ namespace TravelExplore
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
             m_window = new MainWindow();
+
+            // Create a Frame to act as the navigation context and navigate to the first page
+            _rootFrame = new Frame();
+            _rootFrame.NavigationFailed += OnNavigationFailed;
+
+            // Navigate to the first page, configuring the new page
+            // by passing required information as a navigation parameter
+            _rootFrame.Navigate(typeof(MainPage), args.Arguments);
+
+            // Place the frame in the current Window
+            m_window.Content = _rootFrame;
+            // Ensure the MainWindow is active
             m_window.Activate();
         }
 
+        void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
+        {
+            throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
+        }
+
         private Window m_window;
+        private static Frame _rootFrame;
+
+        public static bool TryGoBack()
+        {
+            //Frame rootFrame = Window.Current.Content as Frame;
+            Frame rootFrame = _rootFrame;
+            if (rootFrame.CanGoBack)
+            {
+                rootFrame.GoBack();
+                return true;
+            }
+            return false;
+        }
     }
 }

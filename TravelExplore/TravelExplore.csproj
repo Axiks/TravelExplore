@@ -11,6 +11,10 @@
     <UseWinUI>true</UseWinUI>
     <EnableMsixTooling>true</EnableMsixTooling>
   </PropertyGroup>
+  <ItemGroup>
+    <None Remove="CreateOrderPage.xaml" />
+    <None Remove="MainPage.xaml" />
+  </ItemGroup>
 
   <ItemGroup>
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -43,6 +47,17 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TravelExplore.Core\TravelExplore.Core.csproj" />
+    <ProjectReference Include="..\TravelExplore.Data\TravelExplore.Data.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="MainPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="CreateOrderPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 
   <!-- 

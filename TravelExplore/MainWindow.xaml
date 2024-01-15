@@ -10,21 +10,5 @@
     mc:Ignorable="d">
 
     <Grid>
-        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Button x:Name="myButton" Click="myButton_Click">New travel</Button>
-            <controls:DataGrid x:Name="myDataGrid" AutoGenerateColumns="True"
-                               CellEditEnding="dg_CellEditEnding"
-                               ItemsSource="{x:Bind MyData}">
-                <controls:DataGrid.Columns>
-                    <controls:DataGridTemplateColumn Header="" IsReadOnly="True">
-                        <controls:DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <Button x:Name="myDeleteButton" Click="myDeleteButton_Click">Delete</Button>
-                            </DataTemplate>
-                        </controls:DataGridTemplateColumn.CellTemplate>
-                    </controls:DataGridTemplateColumn>
-                </controls:DataGrid.Columns>
-            </controls:DataGrid>
-        </StackPanel>
     </Grid>
 </Window>

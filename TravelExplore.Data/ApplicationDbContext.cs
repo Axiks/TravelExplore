@@ -7,16 +7,16 @@ namespace TravelExplore.Data
 {
     public class ApplicationDbContext : DbContext
     {
-        protected readonly IConfiguration Configuration;
+        private readonly string _connectionString;
 
-        public ApplicationDbContext(IConfiguration configuration)
+        public ApplicationDbContext(String connectionString)
         {
-            Configuration = configuration;
+            _connectionString = connectionString;
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            options.UseSqlServer(Configuration.GetConnectionString("WebApiDatabase"));
+            options.UseSqlServer(_connectionString);
         }
 
         public DbSet<Customer> Customers { get; set; }

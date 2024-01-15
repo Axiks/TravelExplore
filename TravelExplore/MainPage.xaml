@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="TravelExplore.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:TravelExplore"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+
+        <TextBlock x:Name="pageTitle" Text="Main Page"
+               Margin="16" Style="{StaticResource TitleTextBlockStyle}"/>
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Button x:Name="myButton" Click="CreateOrderButton_Click">New travel</Button>
+            <controls:DataGrid x:Name="myDataGrid" AutoGenerateColumns="True"
+                       CellEditEnding="dg_CellEditEnding"
+                       ItemsSource="{x:Bind MyData}">
+                <controls:DataGrid.Columns>
+                    <controls:DataGridTemplateColumn Header="" IsReadOnly="True">
+                        <controls:DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button x:Name="myDeleteButton" Click="myDeleteButton_Click">Delete</Button>
+                            </DataTemplate>
+                        </controls:DataGridTemplateColumn.CellTemplate>
+                    </controls:DataGridTemplateColumn>
+                </controls:DataGrid.Columns>
+            </controls:DataGrid>
+        </StackPanel>
+    </Grid>
+</Page>

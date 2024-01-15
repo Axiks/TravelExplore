@@ -16,6 +16,7 @@ using Windows.Foundation.Collections;
 using CommunityToolkit.WinUI;
 using CommunityToolkit.WinUI.UI.Controls;
 using System.Collections.ObjectModel;
+using TravelExplore.Data;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -27,55 +28,9 @@ namespace TravelExplore
     /// </summary>
     public sealed partial class MainWindow : Window
     {
-        private ObservableCollection<MyDataClass> MyData = new ObservableCollection<MyDataClass>();
-
         public MainWindow()
         {
             this.InitializeComponent();
-
-            MyData.Add(new MyDataClass("Miku", "Katowice", DateTime.Now, DateTime.Now.AddDays(3)));
-            MyData.Add(new MyDataClass("Nana", "Red sea", DateTime.Now, DateTime.Now.AddDays(7)));
-            MyData.Add(new MyDataClass("Axiks", "California", DateTime.Now, DateTime.Now.AddDays(14)));
-        }
-
-        private void myButton_Click(object sender, RoutedEventArgs e)
-        {
-            myButton.Content = "Clicked :D";
-        }
-
-        private void myDeleteButton_Click(object sender, RoutedEventArgs e)
-        {
-            //myDeleteButton.Content = "Clicked :D";
-        }
-
-        private void dg_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
-        {
-            if (e.EditAction == DataGridEditAction.Cancel)
-                return;
-
-            string editedColumnProperty = ((Binding)((DataGridBoundColumn)e.Column).Binding).Path.Path;
-            object newValue = null;
-            if (e.EditingElement is TextBox editingTextBox)
-            {
-                newValue = editingTextBox.Text;
-            }
         }
     }
-
-    public class MyDataClass
-    {
-        public String ClientName { get; set; }
-        public String AddressOfDeparture { get; set; }
-        public String DateOfDeparture { get; set; }
-        public String DateOfArrival { get; set; }
-
-        public MyDataClass(String ClientName, String AddressOfDeparture, DateTime DateOfDeparture, DateTime DateOfArrival)
-        {
-            this.ClientName = ClientName;
-            this.AddressOfDeparture = AddressOfDeparture;
-            this.DateOfDeparture = DateOfDeparture.ToString("dd/MM/yyyy");
-            this.DateOfArrival = DateOfArrival.ToString("dd/MM/yyyy");
-        }
-    }
-
 }

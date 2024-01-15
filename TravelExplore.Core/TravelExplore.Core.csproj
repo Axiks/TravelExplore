@@ -10,8 +10,4 @@
     <ProjectReference Include="..\TravelExplore.Data\TravelExplore.Data.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Services\" />
-  </ItemGroup>
-
 </Project>
