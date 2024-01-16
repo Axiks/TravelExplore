@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using TravelExplore.Data.Entities;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 
@@ -54,7 +55,13 @@ namespace TravelExplore
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            
+            SingletonOrderProvider singletonOrderMonitor = SingletonOrderProvider.Instance;
+            var OrderMonitor = singletonOrderMonitor.OrderProvider;
+            var order = new OrderEntity();
+            order.Id = 454654646;
+            order.Updated = DateTime.Now;
+            order.Created = DateTime.Now;
+            OrderMonitor.AddOrder(order);
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)

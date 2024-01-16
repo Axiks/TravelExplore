@@ -46,7 +46,6 @@
     <ProjectCapability Include="Msix" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\TravelExplore.Core\TravelExplore.Core.csproj" />
     <ProjectReference Include="..\TravelExplore.Data\TravelExplore.Data.csproj" />
   </ItemGroup>
   <ItemGroup>

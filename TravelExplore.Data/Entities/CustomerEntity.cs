@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 
 namespace TravelExplore.Data.Entities
 {
-    public class Order
+    public class CustomerEntity
     {
         public int Id { get; set; }
-        public Customer Customer { get; set;}
-        public string AddressOfDeparture { get; set; }
-        public DateTime DateOfArrival { get; set; }
-        public DateTime DateOfDeparture { get; set; }
+        public string Name { get; set; }
+        public string Surname { get; set; }
+        public int? Telephonenumber { get; set; }
+        public string? Email { get; set; }
+        public List<OrderEntity> Orders { get; set; }
         public DateTime Updated { get; set; } = DateTime.Now;
         public DateTime Created { get; set; } = DateTime.Now;
     }

@@ -9,9 +9,9 @@ namespace TravelExplore.Data.Interfaces
 {
     public interface IOrderRepository
     {
-        public List<Order> GetOrders();
-        public Order CreateOrder(int userId, string AddressOfDeparture, DateTime DateOfArrival, DateTime DateOfDeparture);
-        public Order UpdateOrder(int orderId, string? AddressOfDeparture, DateTime? DateOfArrival, DateTime? DateOfDeparture);
+        public List<OrderEntity> GetOrders();
+        public OrderEntity CreateOrder(int userId, string AddressOfDeparture, DateTime DateOfArrival, DateTime DateOfDeparture);
+        public OrderEntity UpdateOrder(int orderId, string? AddressOfDeparture, DateTime? DateOfArrival, DateTime? DateOfDeparture);
         public void DeleteOrder(int orderId);
     }
 }

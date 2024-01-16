@@ -17,15 +17,15 @@ namespace TravelExplore.Data.Repositories
             _context = context;
         }
 
-        public Customer CreateCustomer(string name, string surname, int? telephonenumber, string email)
+        public CustomerEntity CreateCustomer(string name, string surname, int? telephonenumber, string email)
         {
-            var customer = new Customer { Name = name, Surname = surname, Telephonenumber = telephonenumber, Email = email };
+            var customer = new CustomerEntity { Name = name, Surname = surname, Telephonenumber = telephonenumber, Email = email };
             _context.Add(customer);
             _context.SaveChanges();
             return customer;
         }
 
-        public Customer GetCustomerById(int customerId)
+        public CustomerEntity GetCustomerById(int customerId)
         {
             var customer = _context.Customers.FirstOrDefault(x => x.Id == customerId);
             return customer;

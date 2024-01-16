@@ -17,10 +17,10 @@ namespace TravelExplore.Data.Repositories
             _context = context;
         }
 
-        public Order CreateOrder(int userId, string AddressOfDeparture, DateTime DateOfArrival, DateTime DateOfDeparture)
+        public OrderEntity CreateOrder(int userId, string AddressOfDeparture, DateTime DateOfArrival, DateTime DateOfDeparture)
         {
             var customer = _context.Customers.FirstOrDefault(x => x.Id ==  userId);
-            var order = new Order { Customer = customer, AddressOfDeparture = AddressOfDeparture, DateOfArrival = DateOfArrival, DateOfDeparture = DateOfDeparture };
+            var order = new OrderEntity { Customer = customer, AddressOfDeparture = AddressOfDeparture, DateOfArrival = DateOfArrival, DateOfDeparture = DateOfDeparture };
             _context.Add(order);
             _context.SaveChanges();
             return order;
@@ -33,12 +33,12 @@ namespace TravelExplore.Data.Repositories
             _context.SaveChanges();
         }
 
-        public List<Order> GetOrders()
+        public List<OrderEntity> GetOrders()
         {
             return _context.Orders.ToList();
         }
 
-        public Order UpdateOrder(int orderId, string? AddressOfDeparture, DateTime? DateOfArrival, DateTime? DateOfDeparture)
+        public OrderEntity UpdateOrder(int orderId, string? AddressOfDeparture, DateTime? DateOfArrival, DateTime? DateOfDeparture)
         {
             var order = _context.Orders.FirstOrDefault(x => x.Id == orderId);
             if (AddressOfDeparture != null) order.AddressOfDeparture = AddressOfDeparture;

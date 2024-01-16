@@ -15,6 +15,9 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Xml.Linq;
 using TravelExplore.Data;
+using TravelExplore.Data.Entities;
+using TravelExplore.Observers;
+using TravelExplore.Providers;
 using Windows.Devices.Enumeration;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -27,7 +30,7 @@ namespace TravelExplore
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MainPage : Page
+    public sealed partial class MainPage : Page, IObserver<List<OrderEntity>>
     {
         private ObservableCollection<MyDataClass> MyData = new ObservableCollection<MyDataClass>();
         private readonly ApplicationDbContext _dbContext;
@@ -43,6 +46,12 @@ namespace TravelExplore
             MyData.Add(new MyDataClass("Miku", "Katowice", DateTime.Now, DateTime.Now.AddDays(3)));
             MyData.Add(new MyDataClass("Nana", "Red sea", DateTime.Now, DateTime.Now.AddDays(7)));
             MyData.Add(new MyDataClass("Axiks", "California", DateTime.Now, DateTime.Now.AddDays(14)));
+
+
+            SingletonOrderProvider singletonOrderMonitor = SingletonOrderProvider.Instance;
+            OrderProvider OrderProvider = singletonOrderMonitor.OrderProvider;
+
+            OrderProvider.Subscribe(this);
         }
 
         private void CreateOrderButton_Click(object sender, RoutedEventArgs e)
@@ -66,6 +75,21 @@ namespace TravelExplore
             {
                 newValue = editingTextBox.Text;
             }
+        }
+
+        public void OnCompleted()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnError(Exception error)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnNext(List<OrderEntity> values)
+        {
+            var aaaaaaa = values;
         }
     }
 

@@ -19,16 +19,16 @@ namespace TravelExplore.Data
             options.UseSqlServer(_connectionString);
         }
 
-        public DbSet<Customer> Customers { get; set; }
-        public DbSet<Order> Orders { get; set; }
+        public DbSet<CustomerEntity> Customers { get; set; }
+        public DbSet<OrderEntity> Orders { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Customer>()
+            modelBuilder.Entity<CustomerEntity>()
                 .HasMany(e => e.Orders)
                 .WithOne(e => e.Customer);
 
-            modelBuilder.Entity<Order>()
+            modelBuilder.Entity<OrderEntity>()
                 .HasOne(e => e.Customer)
                 .WithMany(e => e.Orders)
                 .IsRequired();
