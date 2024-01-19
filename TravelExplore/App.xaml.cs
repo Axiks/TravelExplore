@@ -8,6 +8,7 @@ using Microsoft.UI.Xaml.Navigation;
 using Microsoft.UI.Xaml.Shapes;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -21,6 +22,13 @@ using Windows.Foundation.Collections;
 
 namespace TravelExplore
 {
+    public class RestaurantParams
+    {
+        public RestaurantParams() { }
+        public ObservableCollection<MyDataClass> MyData { get; set; }
+        // ...
+    }
+
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.
     /// </summary>
@@ -30,10 +38,13 @@ namespace TravelExplore
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
         /// </summary>
+
         public App()
         {
             this.InitializeComponent();
         }
+
+
 
         /// <summary>
         /// Invoked when the application is launched.
@@ -47,9 +58,16 @@ namespace TravelExplore
             _rootFrame = new Frame();
             _rootFrame.NavigationFailed += OnNavigationFailed;
 
+
+            var parameters = new RestaurantParams();
+            parameters.MyData = new ObservableCollection<MyDataClass> {
+                new MyDataClass("Miku", "Katowice", DateTime.Now, DateTime.Now.AddDays(3)),
+                new MyDataClass("Nana", "Red sea", DateTime.Now, DateTime.Now.AddDays(7)),
+                new MyDataClass("Axiks", "California", DateTime.Now, DateTime.Now.AddDays(14))
+            };
             // Navigate to the first page, configuring the new page
             // by passing required information as a navigation parameter
-            _rootFrame.Navigate(typeof(MainPage), args.Arguments);
+            _rootFrame.Navigate(typeof(MainPage), parameters);
 
             // Place the frame in the current Window
             m_window.Content = _rootFrame;

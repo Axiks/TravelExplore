@@ -6,29 +6,74 @@
     xmlns:local="using:TravelExplore"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
+    xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"  xmlns:models="using:TravelExplore"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
+        <SplitView IsPaneOpen="True"
+           DisplayMode="Inline"
+           OpenPaneLength="296">
+            <SplitView.Pane>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="0"  Margin="8,8,0,0">
+                        <Button x:Name="myButton" Click="CreateOrderButton_Click" >
+                            <StackPanel Orientation="Horizontal" Margin="2">
+                                <SymbolIcon Symbol="57609"/>
+                                <TextBlock Text="New travel" Margin="8,0,0,0"/>
+                            </StackPanel>
+                        </Button>
+                        <Button x:Name="myTestButton" Click="myTestButton_Click" Margin="0,8,0,8">Test</Button>
+                    </StackPanel>
+                    <ListView x:Name="orderListView"
+                              Grid.Row="1"
+                              ItemsSource="{x:Bind MyData, Mode=OneWay}"
+                              HorizontalContentAlignment="Stretch"
+                              VerticalAlignment="Stretch"
+                              ScrollViewer.VerticalScrollMode="Enabled">
+                            <ListView.ItemTemplate>
+                                <DataTemplate x:DataType="models:MyDataClass">
+                                    <Grid Height="auto" Width="296" Margin="6">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel>
+                                            <TextBlock Text="{x:Bind Path=ClientName}"/>
+                                            <TextBlock Text="{x:Bind Path=AddressOfDeparture}"/>
+                                        </StackPanel>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
 
-        <TextBlock x:Name="pageTitle" Text="Main Page"
-               Margin="16" Style="{StaticResource TitleTextBlockStyle}"/>
-        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Button x:Name="myButton" Click="CreateOrderButton_Click">New travel</Button>
-            <controls:DataGrid x:Name="myDataGrid" AutoGenerateColumns="True"
-                       CellEditEnding="dg_CellEditEnding"
-                       ItemsSource="{x:Bind MyData}">
-                <controls:DataGrid.Columns>
-                    <controls:DataGridTemplateColumn Header="" IsReadOnly="True">
-                        <controls:DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <Button x:Name="myDeleteButton" Click="myDeleteButton_Click">Delete</Button>
-                            </DataTemplate>
-                        </controls:DataGridTemplateColumn.CellTemplate>
-                    </controls:DataGridTemplateColumn>
-                </controls:DataGrid.Columns>
-            </controls:DataGrid>
-        </StackPanel>
+                </Grid>
+                
+
+
+            </SplitView.Pane>
+
+            <Grid>
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock Text="Name"/>
+                    <TextBlock Text="Surname"/>
+                    <TextBlock Text="Phone number"/>
+                    <TextBlock Text="Email"/>
+                    <TextBlock Text="User address"/>
+                    <TextBlock Text="Arrival date"/>
+                    <TextBlock Text="Arrival address"/>
+                    <TextBlock Text="Departure address"/>
+                    <Button x:Name="Update">Update</Button>
+                    <Button x:Name="Delete">Delete</Button>
+                    <TextBlock Text="Offer created"/>
+                    <TextBlock Text="Offer updated"/>
+                </StackPanel>
+            </Grid>
+        </SplitView>
+
     </Grid>
 </Page>

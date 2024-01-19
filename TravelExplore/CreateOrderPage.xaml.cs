@@ -62,6 +62,8 @@ namespace TravelExplore
             order.Updated = DateTime.Now;
             order.Created = DateTime.Now;
             OrderMonitor.AddOrder(order);
+
+            App.TryGoBack();
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
