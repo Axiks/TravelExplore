@@ -34,45 +34,28 @@
                               ItemsSource="{x:Bind MyData, Mode=OneWay}"
                               HorizontalContentAlignment="Stretch"
                               VerticalAlignment="Stretch"
-                              ScrollViewer.VerticalScrollMode="Enabled">
-                            <ListView.ItemTemplate>
-                                <DataTemplate x:DataType="models:MyDataClass">
-                                    <Grid Height="auto" Width="296" Margin="6">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto"/>
-                                            <ColumnDefinition Width="*"/>
-                                        </Grid.ColumnDefinitions>
-                                        <StackPanel>
-                                            <TextBlock Text="{x:Bind Path=ClientName}"/>
-                                            <TextBlock Text="{x:Bind Path=AddressOfDeparture}"/>
-                                        </StackPanel>
-                                    </Grid>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
-
+                              ScrollViewer.VerticalScrollMode="Enabled"
+                              SelectionChanged="orderList_SelectionChanged">
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:DataType="models:MyDataClass">
+                                <Grid Height="auto" Width="296" Margin="6">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel>
+                                        <TextBlock Text="{x:Bind Path=ClientName}"/>
+                                        <TextBlock Text="{x:Bind Path=AddressOfDeparture}"/>
+                                    </StackPanel>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
                 </Grid>
-                
-
-
             </SplitView.Pane>
-
-            <Grid>
-                <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <TextBlock Text="Name"/>
-                    <TextBlock Text="Surname"/>
-                    <TextBlock Text="Phone number"/>
-                    <TextBlock Text="Email"/>
-                    <TextBlock Text="User address"/>
-                    <TextBlock Text="Arrival date"/>
-                    <TextBlock Text="Arrival address"/>
-                    <TextBlock Text="Departure address"/>
-                    <Button x:Name="Update">Update</Button>
-                    <Button x:Name="Delete">Delete</Button>
-                    <TextBlock Text="Offer created"/>
-                    <TextBlock Text="Offer updated"/>
-                </StackPanel>
-            </Grid>
+            <SplitView.Content>
+                <Frame x:Name="OfferDataFrame"></Frame>
+            </SplitView.Content>
         </SplitView>
 
     </Grid>

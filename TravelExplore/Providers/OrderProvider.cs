@@ -50,6 +50,12 @@ namespace TravelExplore.Providers
 
         //public List<Order> GetAllOrder() => _orders;
 
+        public void LoadOrders()
+        {
+            foreach (var observer in _observers)
+                observer.OnNext(_orders);
+        }
+
         public void AddOrder(OrderEntity order)
         {
             _orders.Add(order);

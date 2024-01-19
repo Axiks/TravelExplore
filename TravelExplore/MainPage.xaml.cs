@@ -18,7 +18,6 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Xml.Linq;
 using TravelExplore.Data;
 using TravelExplore.Data.Entities;
-using TravelExplore.Observers;
 using TravelExplore.Providers;
 using Windows.ApplicationModel.Contacts;
 using Windows.Devices.Enumeration;
@@ -39,7 +38,7 @@ namespace TravelExplore
 
         private ObservableCollection<MyDataClass> MyData;
 
-        AuthorsCollection collection;
+        private MainPageParams _mainPageParams;
 
         public MainPage()
         {
@@ -51,19 +50,6 @@ namespace TravelExplore
             MyData = new ObservableCollection<MyDataClass>();
             _dbContext.Database.EnsureCreated();
 
-            /*MyData.Add(new MyDataClass("Miku", "Katowice", DateTime.Now, DateTime.Now.AddDays(3)));
-            MyData.Add(new MyDataClass("Nana", "Red sea", DateTime.Now, DateTime.Now.AddDays(7)));
-            MyData.Add(new MyDataClass("Axiks", "California", DateTime.Now, DateTime.Now.AddDays(14)));*/
-
-/*            ListView OffersLV = new ListView();
-
-            collection = new AuthorsCollection();
-            OffersLV.ItemsSource = collection;
-
-            
-
-            OfferListPanel.Children.Add(OffersLV);*/
-
             SingletonOrderProvider singletonOrderMonitor = SingletonOrderProvider.Instance;
             OrderProvider OrderProvider = singletonOrderMonitor.OrderProvider;
 
@@ -74,7 +60,7 @@ namespace TravelExplore
         {
             base.OnNavigatedTo(e);
 
-            var parameters = (RestaurantParams)e.Parameter;
+            var parameters = (MainPageParams)e.Parameter;
 
             ListView OffersLV = new ListView();
 
@@ -82,41 +68,32 @@ namespace TravelExplore
             MyData = parameters.MyData;
             OffersLV.ItemsSource = MyData;
 
-            //OfferListPanel.Children.Add(OffersLV);
+            _mainPageParams = parameters;
 
-            // parameters.Name
-            // parameters.Text
-            // ...
+            if (_mainPageParams != null && _mainPageParams.SelectedOrderIndex >= 0) orderListView.SelectedIndex = _mainPageParams.SelectedOrderIndex;
+
         }
 
         private void CreateOrderButton_Click(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(CreateOrderPage));
         }
+        
+        private void orderList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            _mainPageParams.SelectedOrderIndex = orderListView.SelectedIndex;
+
+            OfferDataFrame.Navigate(typeof(OfferInfoPage), MyData[_mainPageParams.SelectedOrderIndex]);
+        }
+
         private void myTestButton_Click(object sender, RoutedEventArgs e)
         {
             //collection.Add(collection[0]);
             MyData.Add(new MyDataClass("Nana", "Red sea", DateTime.Now, DateTime.Now.AddDays(7)));
+
+            OfferDataFrame.Navigate(typeof(OfferInfoPage), MyData.First());
         }
 
-
-        private void myDeleteButton_Click(object sender, RoutedEventArgs e)
-        {
-            //myDeleteButton.Content = "Clicked :D";
-        }
-
-        private void dg_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
-        {
-            if (e.EditAction == DataGridEditAction.Cancel)
-                return;
-
-            string editedColumnProperty = ((Binding)((DataGridBoundColumn)e.Column).Binding).Path.Path;
-            object newValue = null;
-            if (e.EditingElement is TextBox editingTextBox)
-            {
-                newValue = editingTextBox.Text;
-            }
-        }
 
         public void OnCompleted()
         {
@@ -136,73 +113,20 @@ namespace TravelExplore
         }
     }
 
-    public class AuthorsCollection : ObservableCollection<Person>
-    {
-        public AuthorsCollection()
-        {
-            Add(new Person
-            {
-                FirstName = "Bejaoui",
-                LastName = "Bechir",
-                PseudoName = "Yougerthen"
-            });
-            Add(new Person
-            {
-                FirstName = "Bejaoui",
-                LastName = "Bechir",
-                PseudoName = "Yougerthen"
-            });
-            Add(new Person
-            {
-                FirstName = "Bejaoui",
-                LastName = "Bechir",
-                PseudoName = "Yougerthen"
-            });
-            Add(new Person
-            {
-                FirstName = "Bejaoui",
-                LastName = "Bechir",
-                PseudoName = "Yougerthen"
-            });
-        }
-    }
-
-    public class Person
-    {
-        public Person() { }
-        public Person(string FirstName, string LastName, string PseudoName)
-        {
-            this.FirstName = FirstName;
-            this.LastName = LastName;
-            this.PseudoName = PseudoName;
-        }
-        public string FirstName
-        {
-            get;
-            set;
-        }
-        public string LastName
-        {
-            get;
-            set;
-        }
-        public string PseudoName
-        {
-            get;
-            set;
-        }
-        public override string ToString()
-        {
-            return string.Format("First name: {0}, Last name: {1}, Pseudo name: {2}", FirstName, LastName, PseudoName);
-        }
-    }
-
     public class MyDataClass : INotifyPropertyChanged
     {
         private String _clientName;
+        private String _clientSurname;
+        private String _clientTelephoneNumber;
+        private String _clientEmail;
+        private String _clientAddress;
+
         private String _addressOfDeparture;
         private String _dateOfDeparture;
-        private String _DateOfArrival;
+        private String _dateOfArrival;
+
+        private String _dateOfCreatedOffer;
+        private String _dateOfUpdatesOffer;
 
         public String ClientName
         {
@@ -211,6 +135,46 @@ namespace TravelExplore
             {
                 this._clientName = value;
                 this.RaisePropertyChanged("ClientName");
+            }
+        }
+
+        public String ClientSurname
+        {
+            get { return this._clientSurname; }
+            set
+            {
+                this._clientSurname = value;
+                this.RaisePropertyChanged("ClientSurname");
+            }
+        }
+
+        public String ClientTelephoneNumber
+        {
+            get { return this._clientTelephoneNumber; }
+            set
+            {
+                this._clientTelephoneNumber = value;
+                this.RaisePropertyChanged("ClientTelephoneNumber");
+            }
+        }
+
+        public String ClientEmail
+        {
+            get { return this._clientEmail; }
+            set
+            {
+                this._clientEmail = value;
+                this.RaisePropertyChanged("ClientEmail");
+            }
+        }
+        
+        public String ClientAddress
+        {
+            get { return this._clientAddress; }
+            set
+            {
+                this._clientAddress = value;
+                this.RaisePropertyChanged("ClientAddress");
             }
         }
 
@@ -236,11 +200,31 @@ namespace TravelExplore
 
         public String DateOfArrival
         {
-            get { return this._DateOfArrival; }
+            get { return this._dateOfArrival; }
             set
             {
-                this._DateOfArrival = value;
+                this._dateOfArrival = value;
                 this.RaisePropertyChanged("DateOfArrival");
+            }
+        }
+
+        public String DateOfCreatedOffer
+        {
+            get { return this._dateOfCreatedOffer; }
+            set
+            {
+                this._dateOfCreatedOffer = value;
+                this.RaisePropertyChanged("DateOfCreatedOffer");
+            }
+        }
+
+        public String DateOfUpdatesOffer
+        {
+            get { return this._dateOfUpdatesOffer; }
+            set
+            {
+                this._dateOfUpdatesOffer = value;
+                this.RaisePropertyChanged("DateOfUpdatesOffer");
             }
         }
 

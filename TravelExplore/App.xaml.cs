@@ -22,10 +22,11 @@ using Windows.Foundation.Collections;
 
 namespace TravelExplore
 {
-    public class RestaurantParams
+    public class MainPageParams
     {
-        public RestaurantParams() { }
+        public MainPageParams() { }
         public ObservableCollection<MyDataClass> MyData { get; set; }
+        public int SelectedOrderIndex { get; set; } = -1;
         // ...
     }
 
@@ -59,7 +60,7 @@ namespace TravelExplore
             _rootFrame.NavigationFailed += OnNavigationFailed;
 
 
-            var parameters = new RestaurantParams();
+            var parameters = new MainPageParams();
             parameters.MyData = new ObservableCollection<MyDataClass> {
                 new MyDataClass("Miku", "Katowice", DateTime.Now, DateTime.Now.AddDays(3)),
                 new MyDataClass("Nana", "Red sea", DateTime.Now, DateTime.Now.AddDays(7)),
@@ -73,6 +74,10 @@ namespace TravelExplore
             m_window.Content = _rootFrame;
             // Ensure the MainWindow is active
             m_window.Activate();
+
+            SingletonOrderProvider singletonOrderMonitor = SingletonOrderProvider.Instance;
+            var OrderProvider = singletonOrderMonitor.OrderProvider;
+            OrderProvider.LoadOrders();
         }
 
         void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
