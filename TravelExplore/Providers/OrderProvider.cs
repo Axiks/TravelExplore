@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TravelExplore.Data;
 using TravelExplore.Data.Entities;
+using TravelExplore.Data.Repositories;
 
 namespace TravelExplore.Providers
 {
@@ -11,11 +13,20 @@ namespace TravelExplore.Providers
     {
         private List<IObserver<List<OrderEntity>>> _observers;
         private List<OrderEntity> _orders;
+        private OrderRepository _orderRepository;
+        private CostumerRepository _costumerRepository;
 
         public OrderProvider()
         {
             _observers = new List<IObserver<List<OrderEntity>>>();
             _orders = new List<OrderEntity>();
+
+            string connectionString = "Data Source=NEKO\\SQLEXPRESS; Initial Catalog=travel-explore-db; User Id=neko; Password=neko";
+            ApplicationDbContext applicationDbContext = new ApplicationDbContext(connectionString);
+            applicationDbContext.Database.EnsureCreated();
+
+            _orderRepository = new OrderRepository(applicationDbContext);
+            _costumerRepository = new CostumerRepository(applicationDbContext);
         }
 
         private class Unsubscriber : IDisposable
@@ -43,15 +54,14 @@ namespace TravelExplore.Providers
             return new Unsubscriber(_observers, observer);
         }
 
-        /*public void AddOrder(Order order)
-        {
-            _orders.Add(order);
-        }*/
-
-        //public List<Order> GetAllOrder() => _orders;
-
         public void LoadOrders()
         {
+            var orders = _orderRepository.GetOrders();
+            foreach (var order in orders)
+            {
+                _orders.Add(order);
+            }
+
             foreach (var observer in _observers)
                 observer.OnNext(_orders);
         }
@@ -59,6 +69,17 @@ namespace TravelExplore.Providers
         public void AddOrder(OrderEntity order)
         {
             _orders.Add(order);
+            foreach (var observer in _observers)
+                observer.OnNext(_orders);
+        }
+
+        public void RemoveOrder(int orderId)
+        {
+            _orderRepository.DeleteOrder(orderId);
+
+            var elementToRemove = _orders.Where(x => x.Id == orderId).FirstOrDefault();
+            _orders.Remove(elementToRemove);
+
             foreach (var observer in _observers)
                 observer.OnNext(_orders);
         }

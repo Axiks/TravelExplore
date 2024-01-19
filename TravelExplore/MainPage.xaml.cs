@@ -32,10 +32,8 @@ namespace TravelExplore
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MainPage : Page, IObserver<List<OrderEntity>>
+    public sealed partial class MainPage : Page
     {
-        private readonly ApplicationDbContext _dbContext;
-
         private ObservableCollection<MyDataClass> MyData;
 
         private MainPageParams _mainPageParams;
@@ -43,17 +41,6 @@ namespace TravelExplore
         public MainPage()
         {
             this.InitializeComponent();
-
-            string connectionString = "Data Source=NEKO\\SQLEXPRESS; Initial Catalog=travel-explore-db; User Id=neko; Password=neko";
-            _dbContext = new ApplicationDbContext(connectionString);
-
-            MyData = new ObservableCollection<MyDataClass>();
-            _dbContext.Database.EnsureCreated();
-
-            SingletonOrderProvider singletonOrderMonitor = SingletonOrderProvider.Instance;
-            OrderProvider OrderProvider = singletonOrderMonitor.OrderProvider;
-
-            OrderProvider.Subscribe(this);
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -70,8 +57,12 @@ namespace TravelExplore
 
             _mainPageParams = parameters;
 
-            if (_mainPageParams != null && _mainPageParams.SelectedOrderIndex >= 0) orderListView.SelectedIndex = _mainPageParams.SelectedOrderIndex;
-
+            if (_mainPageParams != null && _mainPageParams.SelectedOrderIndex >= 0)
+            {
+                orderListView.SelectedIndex = _mainPageParams.SelectedOrderIndex;
+                return;
+            }
+            OfferDataFrame.Navigate(typeof(EmptyOfferInfoPage));
         }
 
         private void CreateOrderButton_Click(object sender, RoutedEventArgs e)
@@ -83,33 +74,27 @@ namespace TravelExplore
         {
             _mainPageParams.SelectedOrderIndex = orderListView.SelectedIndex;
 
-            OfferDataFrame.Navigate(typeof(OfferInfoPage), MyData[_mainPageParams.SelectedOrderIndex]);
+            if (_mainPageParams.SelectedOrderIndex >= 0) {
+                OfferDataFrame.Navigate(typeof(OfferInfoPage), MyData[_mainPageParams.SelectedOrderIndex]);
+                return;
+            };
+            OfferDataFrame.Navigate(typeof(EmptyOfferInfoPage));
         }
 
         private void myTestButton_Click(object sender, RoutedEventArgs e)
         {
             //collection.Add(collection[0]);
-            MyData.Add(new MyDataClass("Nana", "Red sea", DateTime.Now, DateTime.Now.AddDays(7)));
+            /*MyData.Add(new MyDataClass("Nana", "Red sea", DateTime.Now, DateTime.Now.AddDays(7)));
 
-            OfferDataFrame.Navigate(typeof(OfferInfoPage), MyData.First());
-        }
+            OfferDataFrame.Navigate(typeof(OfferInfoPage), MyData.Last());*/
 
-
-        public void OnCompleted()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void OnError(Exception error)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void OnNext(List<OrderEntity> values)
-        {
-            var aaaaaaa = values;
-            //collection.Add(collection[0]);
-            MyData.Add(new MyDataClass("Nana", "Red sea", DateTime.Now, DateTime.Now.AddDays(7)));
+            SingletonOrderProvider singletonOrderMonitor = SingletonOrderProvider.Instance;
+            var OrderMonitor = singletonOrderMonitor.OrderProvider;
+            var order = new OrderEntity();
+            order.Id = 111111;
+            order.Updated = DateTime.Now;
+            order.Created = DateTime.Now;
+            OrderMonitor.AddOrder(order);
         }
     }
 
@@ -121,6 +106,7 @@ namespace TravelExplore
         private String _clientEmail;
         private String _clientAddress;
 
+        private int _orderId;
         private String _addressOfDeparture;
         private String _dateOfDeparture;
         private String _dateOfArrival;
@@ -175,6 +161,16 @@ namespace TravelExplore
             {
                 this._clientAddress = value;
                 this.RaisePropertyChanged("ClientAddress");
+            }
+        }
+
+        public int OrderId
+        {
+            get { return this._orderId; }
+            set
+            {
+                this._orderId = value;
+                this.RaisePropertyChanged("OrderId");
             }
         }
 

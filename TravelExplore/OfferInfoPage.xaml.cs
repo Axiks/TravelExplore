@@ -13,6 +13,8 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Xml.Linq;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using TravelExplore.Providers;
+
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -25,10 +27,14 @@ namespace TravelExplore
     public sealed partial class OfferInfoPage : Page
     {
         private MyDataClass OfferData;
+        private OrderProvider _orderProvider;
 
         public OfferInfoPage()
         {
             this.InitializeComponent();
+
+            SingletonOrderProvider singletonOrderMonitor = SingletonOrderProvider.Instance;
+            _orderProvider = singletonOrderMonitor.OrderProvider;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -47,7 +53,7 @@ namespace TravelExplore
 
         private void deleteButton_Click(object sender, RoutedEventArgs e)
         {
-            //myDeleteButton.Content = "Clicked :D";
+            _orderProvider.RemoveOrder(OfferData.OrderId);
         }
     }
 }

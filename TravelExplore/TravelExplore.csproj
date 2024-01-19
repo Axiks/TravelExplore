@@ -13,6 +13,7 @@
   </PropertyGroup>
   <ItemGroup>
     <None Remove="CreateOrderPage.xaml" />
+    <None Remove="EmptyPage.xaml" />
     <None Remove="MainPage.xaml" />
     <None Remove="OfferInfoPage.xaml" />
   </ItemGroup>
@@ -48,6 +49,11 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TravelExplore.Data\TravelExplore.Data.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="EmptyPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="OfferInfoPage.xaml">
