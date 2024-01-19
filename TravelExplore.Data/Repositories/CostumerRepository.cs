@@ -17,9 +17,9 @@ namespace TravelExplore.Data.Repositories
             _context = context;
         }
 
-        public CustomerEntity CreateCustomer(string name, string surname, int? telephonenumber, string email)
+        public CustomerEntity CreateCustomer(string name, string surname, string email, string? address, int? telephonenumber)
         {
-            var customer = new CustomerEntity { Name = name, Surname = surname, Telephonenumber = telephonenumber, Email = email };
+            var customer = new CustomerEntity { Name = name, Surname = surname, Email = email, Address = address, Telephonenumber = telephonenumber };
             _context.Add(customer);
             _context.SaveChanges();
             return customer;

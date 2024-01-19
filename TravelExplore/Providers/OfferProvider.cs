@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,20 +10,21 @@ using TravelExplore.Data.Repositories;
 
 namespace TravelExplore.Providers
 {
-    public class OrderProvider : IObservable<List<OrderEntity>>
+    public class OfferProvider : IObservable<List<OfferViewModel>>
     {
-        private List<IObserver<List<OrderEntity>>> _observers;
-        private List<OrderEntity> _orders;
+        private List<IObserver<List<OfferViewModel>>> _observers;
+        private List<OfferViewModel> _offers;
         private OrderRepository _orderRepository;
         private CostumerRepository _costumerRepository;
 
-        public OrderProvider()
+        public OfferProvider()
         {
-            _observers = new List<IObserver<List<OrderEntity>>>();
-            _orders = new List<OrderEntity>();
+            _observers = new List<IObserver<List<OfferViewModel>>>();
+            _offers = new List<OfferViewModel>();
 
             string connectionString = "Data Source=NEKO\\SQLEXPRESS; Initial Catalog=travel-explore-db; User Id=neko; Password=neko";
             ApplicationDbContext applicationDbContext = new ApplicationDbContext(connectionString);
+            //applicationDbContext.Database.EnsureDeleted();
             applicationDbContext.Database.EnsureCreated();
 
             _orderRepository = new OrderRepository(applicationDbContext);
@@ -31,10 +33,10 @@ namespace TravelExplore.Providers
 
         private class Unsubscriber : IDisposable
         {
-            private List<IObserver<List<OrderEntity>>> _observers;
-            private IObserver<List<OrderEntity>> _observer;
+            private List<IObserver<List<OfferViewModel>>> _observers;
+            private IObserver<List<OfferViewModel>> _observer;
 
-            public Unsubscriber(List<IObserver<List<OrderEntity>>> observers, IObserver<List<OrderEntity>> observer)
+            public Unsubscriber(List<IObserver<List<OfferViewModel>>> observers, IObserver<List<OfferViewModel>> observer)
             {
                 this._observers = observers;
                 this._observer = observer;
@@ -46,7 +48,7 @@ namespace TravelExplore.Providers
             }
         }
 
-        public IDisposable Subscribe(IObserver<List<OrderEntity>> observer)
+        public IDisposable Subscribe(IObserver<List<OfferViewModel>> observer)
         {
             if (!_observers.Contains(observer))
                 _observers.Add(observer);
@@ -57,31 +59,38 @@ namespace TravelExplore.Providers
         public void LoadOrders()
         {
             var orders = _orderRepository.GetOrders();
+
             foreach (var order in orders)
             {
-                _orders.Add(order);
+                var offer = new OfferViewModel(order.Customer, order);
+                _offers.Add(offer);
             }
 
             foreach (var observer in _observers)
-                observer.OnNext(_orders);
+                observer.OnNext(_offers);
         }
 
-        public void AddOrder(OrderEntity order)
+        public void AddOffer(CreateOfferDTO offerDTO)
         {
-            _orders.Add(order);
+            var newCostumer = _costumerRepository.CreateCustomer(offerDTO.ClientName, offerDTO.ClientSurname, offerDTO.ClientEmail, offerDTO.ClientAddress, offerDTO.ClientTelephoneNumber);
+            var newOrder = _orderRepository.CreateOrder(newCostumer.Id, offerDTO.AddressOfDeparture, offerDTO.DateOfArrival, offerDTO.DateOfDeparture);
+
+            //_orderRepository.CreateOrder(order);
+            var offer = new OfferViewModel(newCostumer, newOrder);
+            _offers.Add(offer);
             foreach (var observer in _observers)
-                observer.OnNext(_orders);
+                observer.OnNext(_offers);
         }
 
         public void RemoveOrder(int orderId)
         {
             _orderRepository.DeleteOrder(orderId);
 
-            var elementToRemove = _orders.Where(x => x.Id == orderId).FirstOrDefault();
-            _orders.Remove(elementToRemove);
+            var elementToRemove = _offers.Where(x => x.OrderId == orderId).FirstOrDefault();
+            _offers.Remove(elementToRemove);
 
             foreach (var observer in _observers)
-                observer.OnNext(_orders);
+                observer.OnNext(_offers);
         }
     }
 }

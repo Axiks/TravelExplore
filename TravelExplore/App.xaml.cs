@@ -29,14 +29,14 @@ namespace TravelExplore
     public class MainPageParams
     {
         public MainPageParams() { }
-        public ObservableCollection<MyDataClass> MyData { get; set; }
+        public ObservableCollection<OfferViewModel> MyData { get; set; }
         public int SelectedOrderIndex { get; set; } = -1;
     }
 
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.
     /// </summary>
-    public partial class App : Application, IObserver<List<OrderEntity>>
+    public partial class App : Application, IObserver<List<OfferViewModel>>
     {
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
@@ -50,7 +50,7 @@ namespace TravelExplore
             this.InitializeComponent();
 
             SingletonOrderProvider singletonOrderMonitor = SingletonOrderProvider.Instance;
-            OrderProvider OrderProvider = singletonOrderMonitor.OrderProvider;
+            OfferProvider OrderProvider = singletonOrderMonitor.OrderProvider;
             OrderProvider.Subscribe(this);
         }
 
@@ -69,11 +69,7 @@ namespace TravelExplore
             _rootFrame.NavigationFailed += OnNavigationFailed;
 
 
-            _myPageparameters.MyData = new ObservableCollection<MyDataClass> {
-                new MyDataClass("Miku", "Katowice", DateTime.Now, DateTime.Now.AddDays(3)),
-                new MyDataClass("Nana", "Red sea", DateTime.Now, DateTime.Now.AddDays(7)),
-                new MyDataClass("Axiks", "California", DateTime.Now, DateTime.Now.AddDays(14))
-            };
+            _myPageparameters.MyData = new ObservableCollection<OfferViewModel>();
 
             // Navigate to the first page, configuring the new page
             // by passing required information as a navigation parameter
@@ -119,16 +115,12 @@ namespace TravelExplore
             throw new NotImplementedException();
         }
 
-        public void OnNext(List<OrderEntity> orders)
+        public void OnNext(List<OfferViewModel> offers)
         {
-            _myPageparameters.MyData.Clear();
-            foreach (var order in orders)
+            if(_myPageparameters.MyData.Count > 0) _myPageparameters.MyData.Clear();
+            foreach (var offer in offers)
             {
-                var data = new MyDataClass("Nana", order.AddressOfDeparture, order.DateOfDeparture, order.DateOfArrival);
-                data.OrderId = order.Id;
-                data.DateOfCreatedOffer = order.Created.ToString();
-                data.DateOfUpdatesOffer = order.Updated.ToString();
-                _myPageparameters.MyData.Add(data);
+                _myPageparameters.MyData.Add(offer);
             }
         }
     }

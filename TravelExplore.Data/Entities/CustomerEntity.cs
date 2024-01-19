@@ -13,6 +13,7 @@ namespace TravelExplore.Data.Entities
         public string Surname { get; set; }
         public int? Telephonenumber { get; set; }
         public string? Email { get; set; }
+        public string? Address { get; set; }
         public List<OrderEntity> Orders { get; set; }
         public DateTime Updated { get; set; } = DateTime.Now;
         public DateTime Created { get; set; } = DateTime.Now;

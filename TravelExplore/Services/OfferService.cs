@@ -15,7 +15,7 @@ namespace TravelExplore.Services
         private ApplicationDbContext _dbContext;
         private CostumerRepository _costumerRepository;
         private OrderRepository _orderRepository;
-        private OrderProvider _orderProvider;
+        private OfferProvider _orderProvider;
 
         public OfferService()
         {

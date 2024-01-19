@@ -27,7 +27,6 @@
                                 <TextBlock Text="New travel" Margin="8,0,0,0"/>
                             </StackPanel>
                         </Button>
-                        <Button x:Name="myTestButton" Click="myTestButton_Click" Margin="0,8,0,8">Test</Button>
                     </StackPanel>
                     <ListView x:Name="orderListView"
                               Grid.Row="1"
@@ -37,7 +36,7 @@
                               ScrollViewer.VerticalScrollMode="Enabled"
                               SelectionChanged="orderList_SelectionChanged">
                         <ListView.ItemTemplate>
-                            <DataTemplate x:DataType="models:MyDataClass">
+                            <DataTemplate x:DataType="models:OfferViewModel">
                                 <Grid Height="auto" Width="296" Margin="6">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto"/>

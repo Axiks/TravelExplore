@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -35,7 +36,9 @@ namespace TravelExplore.Data.Repositories
 
         public List<OrderEntity> GetOrders()
         {
-            return _context.Orders.ToList();
+            return _context.Orders
+                .Include(x => x.Customer)
+                .ToList();
         }
 
         public OrderEntity UpdateOrder(int orderId, string? AddressOfDeparture, DateTime? DateOfArrival, DateTime? DateOfDeparture)

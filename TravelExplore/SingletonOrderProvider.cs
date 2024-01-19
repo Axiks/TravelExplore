@@ -10,14 +10,14 @@ namespace TravelExplore
     public sealed class SingletonOrderProvider
     {
         private static readonly SingletonOrderProvider instance = new SingletonOrderProvider();
-        public OrderProvider OrderProvider { get; }
+        public OfferProvider OrderProvider { get; }
         
         static SingletonOrderProvider()
         {
         }
         private SingletonOrderProvider()
         {
-            OrderProvider = new OrderProvider();
+            OrderProvider = new OfferProvider();
         }
         public static SingletonOrderProvider Instance
         {

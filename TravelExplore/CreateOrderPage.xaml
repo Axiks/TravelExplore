@@ -9,6 +9,10 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
+    <Page.Resources>
+        <local:TimeConverter x:Key="TimeConverter"/>
+    </Page.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -20,6 +24,13 @@
                 Style="{StaticResource NavigationBackButtonNormalStyle}"
                 IsEnabled="{x:Bind Frame.CanGoBack, Mode=OneWay}" 
                 ToolTipService.ToolTip="Back"/>
+            <InfoBar
+                x:Name="FillFieldsInfoBar"
+                IsOpen="False"
+                IsIconVisible="True"
+                IsClosable="True"
+                Title="Warning"
+                Message="Fill in all fields" />
 
             <TextBlock x:Name="pageTitle" Text="Create offer"
                 Margin="16" Style="{StaticResource TitleTextBlockStyle}"/>
@@ -29,27 +40,32 @@
                     <StackPanel>
                         <TextBlock Text="Customer info" Style="{StaticResource TitleTextBlockStyle}"/>
                         <RelativePanel>
-                            <TextBox x:Name="Name" Header= "Name" Margin="0,24,0,0" MaxLength="32" Width="188" HorizontalAlignment="Left" InputScope="PersonalFullName"/>
-                            <TextBox x:Name="Surname" Header= "Surname" Margin="24,24,0,0" MaxLength="32" Width="188" HorizontalAlignment="Right" InputScope="PersonalFullName" RelativePanel.RightOf="Name"/>
+                            <TextBox x:Name="Name" Header= "Name" Margin="0,24,0,0" MaxLength="32" Width="188" HorizontalAlignment="Left" InputScope="PersonalFullName"
+                                     Text="{x:Bind CreateOfferDTO.ClientName,Mode=TwoWay}"/>
+                            <TextBox x:Name="Surname" Header= "Surname" Margin="24,24,0,0" MaxLength="32" Width="188" HorizontalAlignment="Right" InputScope="PersonalFullName" RelativePanel.RightOf="Name"
+                                     Text="{x:Bind CreateOfferDTO.ClientSurname,Mode=TwoWay}"/>
                         </RelativePanel>
-                        <TextBox x:Name="PhoneNumber" Header="Phone Number" Margin="0,24,0,0" MaxLength="15" Width="400" HorizontalAlignment="Left" InputScope="TelephoneNumber" />
-                        <TextBox x:Name="Email" Header="Email" Margin="0,24,0,0" MaxLength="50" Width="400" HorizontalAlignment="Left" InputScope="EmailNameOrAddress" />
-                        <TextBox x:Name="Address" Header="Address" PlaceholderText="Address" Margin="0,24,0,0" MaxLength="50" Width="400" HorizontalAlignment="Left" InputScope="EmailNameOrAddress" />
-                        <RelativePanel>
-                            <TextBox x:Name="City" PlaceholderText="City" Margin="0,24,0,0" MaxLength="50" Width="200" HorizontalAlignment="Left" InputScope="EmailNameOrAddress" />
-                            <TextBox x:Name="ZipCode" PlaceholderText="Zip Code" Margin="24,24,0,0" MaxLength="6" Width="100" HorizontalAlignment="Left" InputScope="Number" RelativePanel.RightOf="City" />
-                        </RelativePanel>
+                        <TextBox x:Name="PhoneNumber" Header="Phone Number" Margin="0,24,0,0" MaxLength="15" Width="400" HorizontalAlignment="Left" InputScope="TelephoneNumber"
+                                 Text="{x:Bind CreateOfferDTO.ClientTelephoneNumber,Mode=TwoWay}"/>
+                        <TextBox x:Name="Email" Header="Email" Margin="0,24,0,0" MaxLength="50" Width="400" HorizontalAlignment="Left" InputScope="EmailNameOrAddress"
+                                 Text="{x:Bind CreateOfferDTO.ClientEmail,Mode=TwoWay}"/>
+                        <TextBox x:Name="Address" Header="Residence" PlaceholderText="Address" Margin="0,24,0,0" MaxLength="50" Width="400" HorizontalAlignment="Left" InputScope="EmailNameOrAddress"
+                                 Text="{x:Bind CreateOfferDTO.ClientAddress,Mode=TwoWay}"/>
                     </StackPanel>
                     <StackPanel Margin="24,0,0,0">
                         <TextBlock Text="Order info" Style="{StaticResource TitleTextBlockStyle}"/>
-                        <DatePicker x:Name="ArrivalDatePicker" Header="Arrival" Margin="0,24,0,0" Width="400" HorizontalAlignment="Left" SelectedDateChanged="arrivalDatePicker_SelectedDateChanged" />
-                        <TextBox x:Name="AddressOfDeparture" Header="Departure" PlaceholderText="Address" Margin="0,24,0,0" MaxLength="50" Width="400" HorizontalAlignment="Left" InputScope="EmailNameOrAddress" />
-                        <DatePicker x:Name="DepartureDatePicker" Margin="0,24,0,0" Width="400 " HorizontalAlignment="Left"  />
+                        
+                        <DatePicker x:Name="ArrivalDatePicker" Header="Arrival" Margin="0,24,0,0" Width="400" HorizontalAlignment="Left" SelectedDateChanged="arrivalDatePicker_SelectedDateChanged"
+                                    Date="{x:Bind CreateOfferDTO.DateOfArrival, Mode=TwoWay, Converter={StaticResource TimeConverter}}"/>
+                        <TextBox x:Name="AddressOfDeparture" Header="Departure" PlaceholderText="Address" Margin="0,24,0,0" MaxLength="50" Width="400" HorizontalAlignment="Left" InputScope="EmailNameOrAddress"
+                                 Text="{x:Bind CreateOfferDTO.AddressOfDeparture,Mode=TwoWay}"/>
+                        <DatePicker x:Name="DepartureDatePicker" Margin="0,24,0,0" Width="400 " HorizontalAlignment="Left"
+                                    Date="{x:Bind CreateOfferDTO.DateOfDeparture, Mode=TwoWay, Converter={StaticResource TimeConverter}}"/>
                     </StackPanel>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                    <Button Content="Save" Margin="0,24" Click="SaveButton_Click"/>
-                    <Button Content="Cancel" Margin="24" Click="CancelButton_Click"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="24">
+                    <Button Content="Random" Margin="0,0,0,0" Click="RandomDataButton_Click"/>
+                    <Button Content="Save" Margin="8,0,0,0" Click="SaveButton_Click"/>
                 </StackPanel>
             </StackPanel>
 

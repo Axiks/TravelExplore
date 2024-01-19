@@ -26,8 +26,8 @@ namespace TravelExplore
     /// </summary>
     public sealed partial class OfferInfoPage : Page
     {
-        private MyDataClass OfferData;
-        private OrderProvider _orderProvider;
+        private OfferViewModel OfferData;
+        private OfferProvider _orderProvider;
 
         public OfferInfoPage()
         {
@@ -41,7 +41,7 @@ namespace TravelExplore
         {
             base.OnNavigatedTo(e);
 
-            var parameters = (MyDataClass)e.Parameter;
+            var parameters = (OfferViewModel)e.Parameter;
 
             OfferData = parameters;
         }

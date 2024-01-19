@@ -10,6 +10,6 @@ namespace TravelExplore.Data.Interfaces
     public interface ICustomerRepository
     {
         public CustomerEntity GetCustomerById(int customerId);
-        public CustomerEntity CreateCustomer(string name, string surname, int? Telephonenumber, string email);
+        public CustomerEntity CreateCustomer(string name, string surname, string email, string? address, int? telephonenumber);
     }
 }

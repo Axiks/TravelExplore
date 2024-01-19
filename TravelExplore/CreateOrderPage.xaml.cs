@@ -24,15 +24,21 @@ namespace TravelExplore
     /// </summary>
     public sealed partial class CreateOrderPage : Page
     {
+        public CreateOfferDTO CreateOfferDTO;
+
         public CreateOrderPage()
         {
             this.InitializeComponent();
 
+            CreateOfferDTO = new CreateOfferDTO();
+
             // Set minimum to the current year and maximum to five years from now.
-            ArrivalDatePicker.SelectedDate = DateTimeOffset.Now;
+            //ArrivalDatePicker.SelectedDate = DateTimeOffset.Now;
+            CreateOfferDTO.DateOfArrival = DateTime.Now;
             ArrivalDatePicker.MinYear = DateTimeOffset.Now;
             // Set minimum to the current year and maximum to five years from now.
-            DepartureDatePicker.SelectedDate = DateTimeOffset.Now;
+            //DepartureDatePicker.SelectedDate = DateTimeOffset.Now;
+            CreateOfferDTO.DateOfDeparture = DateTime.Now;
             DepartureDatePicker.MinYear = DateTimeOffset.Now;
         }
 
@@ -48,6 +54,26 @@ namespace TravelExplore
             //ArrivalDatePicker.Text = arrivalDateTime.ToString();
         }
 
+        private static Random random = new Random();
+
+        private static string RandomString(int length)
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            return new string(Enumerable.Repeat(chars, length)
+                .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
+
+        private void RandomDataButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (CreateOfferDTO.ClientName == null) CreateOfferDTO.ClientName = RandomString(10);
+            if (CreateOfferDTO.ClientSurname == null) CreateOfferDTO.ClientSurname = RandomString(10);
+            if (CreateOfferDTO.ClientEmail == null) CreateOfferDTO.ClientEmail = RandomString(16);
+            if (CreateOfferDTO.ClientAddress == null) CreateOfferDTO.ClientAddress = RandomString(36);
+            if (CreateOfferDTO.ClientTelephoneNumber == 0) CreateOfferDTO.ClientTelephoneNumber = random.Next(1000000000);
+            if (CreateOfferDTO.AddressOfDeparture == null) CreateOfferDTO.AddressOfDeparture = RandomString(36);
+
+        }
+
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
             App.TryGoBack();
@@ -55,13 +81,19 @@ namespace TravelExplore
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
+            FillFieldsInfoBar.IsOpen = false;
+            // Validation
+            if (CreateOfferDTO.ClientName == null) FillFieldsInfoBar.IsOpen = true;
+            if(CreateOfferDTO.ClientSurname == null) FillFieldsInfoBar.IsOpen = true;
+            if(CreateOfferDTO.ClientEmail == null) FillFieldsInfoBar.IsOpen = true;
+            if(CreateOfferDTO.ClientAddress == null) FillFieldsInfoBar.IsOpen = true;
+            if(CreateOfferDTO.AddressOfDeparture == null) FillFieldsInfoBar.IsOpen = true;
+
+            if (FillFieldsInfoBar.IsOpen == true) return;
+
             SingletonOrderProvider singletonOrderMonitor = SingletonOrderProvider.Instance;
             var OrderMonitor = singletonOrderMonitor.OrderProvider;
-            var order = new OrderEntity();
-            order.Id = 454654646;
-            order.Updated = DateTime.Now;
-            order.Created = DateTime.Now;
-            OrderMonitor.AddOrder(order);
+            OrderMonitor.AddOffer(CreateOfferDTO);
 
             App.TryGoBack();
         }
@@ -71,5 +103,19 @@ namespace TravelExplore
             App.TryGoBack();
         }
         
+    }
+
+    public class TimeConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, string language)
+        {
+            return new DateTimeOffset(((DateTime)value).ToUniversalTime());
+
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, string language)
+        {
+            return ((DateTimeOffset)value).DateTime;
+        }
     }
 }

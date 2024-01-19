@@ -11,7 +11,6 @@ using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -34,7 +33,7 @@ namespace TravelExplore
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        private ObservableCollection<MyDataClass> MyData;
+        private ObservableCollection<OfferViewModel> MyData;
 
         private MainPageParams _mainPageParams;
 
@@ -79,166 +78,6 @@ namespace TravelExplore
                 return;
             };
             OfferDataFrame.Navigate(typeof(EmptyOfferInfoPage));
-        }
-
-        private void myTestButton_Click(object sender, RoutedEventArgs e)
-        {
-            //collection.Add(collection[0]);
-            /*MyData.Add(new MyDataClass("Nana", "Red sea", DateTime.Now, DateTime.Now.AddDays(7)));
-
-            OfferDataFrame.Navigate(typeof(OfferInfoPage), MyData.Last());*/
-
-            SingletonOrderProvider singletonOrderMonitor = SingletonOrderProvider.Instance;
-            var OrderMonitor = singletonOrderMonitor.OrderProvider;
-            var order = new OrderEntity();
-            order.Id = 111111;
-            order.Updated = DateTime.Now;
-            order.Created = DateTime.Now;
-            OrderMonitor.AddOrder(order);
-        }
-    }
-
-    public class MyDataClass : INotifyPropertyChanged
-    {
-        private String _clientName;
-        private String _clientSurname;
-        private String _clientTelephoneNumber;
-        private String _clientEmail;
-        private String _clientAddress;
-
-        private int _orderId;
-        private String _addressOfDeparture;
-        private String _dateOfDeparture;
-        private String _dateOfArrival;
-
-        private String _dateOfCreatedOffer;
-        private String _dateOfUpdatesOffer;
-
-        public String ClientName
-        {
-            get { return this._clientName; }
-            set
-            {
-                this._clientName = value;
-                this.RaisePropertyChanged("ClientName");
-            }
-        }
-
-        public String ClientSurname
-        {
-            get { return this._clientSurname; }
-            set
-            {
-                this._clientSurname = value;
-                this.RaisePropertyChanged("ClientSurname");
-            }
-        }
-
-        public String ClientTelephoneNumber
-        {
-            get { return this._clientTelephoneNumber; }
-            set
-            {
-                this._clientTelephoneNumber = value;
-                this.RaisePropertyChanged("ClientTelephoneNumber");
-            }
-        }
-
-        public String ClientEmail
-        {
-            get { return this._clientEmail; }
-            set
-            {
-                this._clientEmail = value;
-                this.RaisePropertyChanged("ClientEmail");
-            }
-        }
-        
-        public String ClientAddress
-        {
-            get { return this._clientAddress; }
-            set
-            {
-                this._clientAddress = value;
-                this.RaisePropertyChanged("ClientAddress");
-            }
-        }
-
-        public int OrderId
-        {
-            get { return this._orderId; }
-            set
-            {
-                this._orderId = value;
-                this.RaisePropertyChanged("OrderId");
-            }
-        }
-
-        public String AddressOfDeparture
-        {
-            get { return this._addressOfDeparture; }
-            set
-            {
-                this._addressOfDeparture = value;
-                this.RaisePropertyChanged("AddressOfDeparture");
-            }
-        }
-
-        public String DateOfDeparture
-        {
-            get { return this._dateOfDeparture; }
-            set
-            {
-                this._dateOfDeparture = value;
-                this.RaisePropertyChanged("DateOfDeparture");
-            }
-        }
-
-        public String DateOfArrival
-        {
-            get { return this._dateOfArrival; }
-            set
-            {
-                this._dateOfArrival = value;
-                this.RaisePropertyChanged("DateOfArrival");
-            }
-        }
-
-        public String DateOfCreatedOffer
-        {
-            get { return this._dateOfCreatedOffer; }
-            set
-            {
-                this._dateOfCreatedOffer = value;
-                this.RaisePropertyChanged("DateOfCreatedOffer");
-            }
-        }
-
-        public String DateOfUpdatesOffer
-        {
-            get { return this._dateOfUpdatesOffer; }
-            set
-            {
-                this._dateOfUpdatesOffer = value;
-                this.RaisePropertyChanged("DateOfUpdatesOffer");
-            }
-        }
-
-        public MyDataClass(String ClientName, String AddressOfDeparture, DateTime DateOfDeparture, DateTime DateOfArrival)
-        {
-            this.ClientName = ClientName;
-            this.AddressOfDeparture = AddressOfDeparture;
-            this.DateOfDeparture = DateOfDeparture.ToString("dd/MM/yyyy");
-            this.DateOfArrival = DateOfArrival.ToString("dd/MM/yyyy");
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void RaisePropertyChanged(string name)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(name));
-            }
         }
     }
 }
