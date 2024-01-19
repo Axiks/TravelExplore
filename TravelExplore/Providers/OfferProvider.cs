@@ -56,6 +56,12 @@ namespace TravelExplore.Providers
             return new Unsubscriber(_observers, observer);
         }
 
+        public void Reload()
+        {
+            foreach (var observer in _observers)
+                observer.OnNext(_offers);
+        }
+
         public void LoadOrders()
         {
             var orders = _orderRepository.GetOrders();
@@ -78,6 +84,39 @@ namespace TravelExplore.Providers
             //_orderRepository.CreateOrder(order);
             var offer = new OfferViewModel(newCostumer, newOrder);
             _offers.Add(offer);
+            foreach (var observer in _observers)
+                observer.OnNext(_offers);
+        }
+
+        public void UpdateOffer(UpdateOfferDTO offerDTO)
+        {
+            var order = _orderRepository.UpdateOrder(
+                    offerDTO.OrderId,
+                    offerDTO.AddressOfDeparture,
+                    offerDTO.DateOfArrival,
+                    offerDTO.DateOfDeparture
+                );
+
+            var costumer = _costumerRepository.UpdateCustomer(
+                    order.Customer.Id,
+                    offerDTO.ClientName,
+                    offerDTO.ClientSurname,
+                    offerDTO.ClientEmail,
+                    offerDTO.ClientAddress,
+                    offerDTO.ClientTelephoneNumber
+                );
+            var elementToUpdate = _offers.Where(x => x.OrderId == offerDTO.OrderId).First();
+
+            elementToUpdate.ClientName = costumer.Name;
+            elementToUpdate.ClientSurname = costumer.Surname;
+            elementToUpdate.ClientEmail = costumer.Email;
+            elementToUpdate.ClientAddress = costumer.Address;
+            elementToUpdate.ClientTelephoneNumber = costumer.Telephonenumber.ToString();
+
+            elementToUpdate.AddressOfDeparture = order.AddressOfDeparture;
+            elementToUpdate.DateOfArrival = order.DateOfArrival.ToString();
+            elementToUpdate.DateOfDeparture = order.DateOfDeparture.ToString();
+
             foreach (var observer in _observers)
                 observer.OnNext(_offers);
         }

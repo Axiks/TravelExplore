@@ -16,6 +16,7 @@
     <None Remove="EmptyPage.xaml" />
     <None Remove="MainPage.xaml" />
     <None Remove="OfferInfoPage.xaml" />
+    <None Remove="UpdateOrderPage.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -49,6 +50,11 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TravelExplore.Data\TravelExplore.Data.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="UpdateOrderPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="EmptyPage.xaml">

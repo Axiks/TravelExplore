@@ -50,7 +50,6 @@ namespace TravelExplore
 
             ListView OffersLV = new ListView();
 
-            //collection = new AuthorsCollection();
             MyData = parameters.MyData;
             OffersLV.ItemsSource = MyData;
 
@@ -63,6 +62,7 @@ namespace TravelExplore
             }
             OfferDataFrame.Navigate(typeof(EmptyOfferInfoPage));
         }
+
 
         private void CreateOrderButton_Click(object sender, RoutedEventArgs e)
         {

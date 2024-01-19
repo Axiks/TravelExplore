@@ -48,6 +48,8 @@ namespace TravelExplore
 
         private void updateButton_Click(object sender, RoutedEventArgs e)
         {
+
+            Frame.Navigate(typeof(UpdateOrderPage), OfferData);
             //myDeleteButton.Content = "Clicked :D";
         }
 
@@ -56,4 +58,5 @@ namespace TravelExplore
             _orderProvider.RemoveOrder(OfferData.OrderId);
         }
     }
+
 }

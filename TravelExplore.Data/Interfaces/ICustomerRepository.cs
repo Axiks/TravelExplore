@@ -11,5 +11,6 @@ namespace TravelExplore.Data.Interfaces
     {
         public CustomerEntity GetCustomerById(int customerId);
         public CustomerEntity CreateCustomer(string name, string surname, string email, string? address, int? telephonenumber);
+        public CustomerEntity UpdateCustomer(int customerId, string? name, string? surname, string? email, string? address, int? telephonenumber);
     }
 }

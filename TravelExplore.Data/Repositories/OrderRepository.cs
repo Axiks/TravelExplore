@@ -43,10 +43,11 @@ namespace TravelExplore.Data.Repositories
 
         public OrderEntity UpdateOrder(int orderId, string? AddressOfDeparture, DateTime? DateOfArrival, DateTime? DateOfDeparture)
         {
-            var order = _context.Orders.FirstOrDefault(x => x.Id == orderId);
+            var order = _context.Orders.First(x => x.Id == orderId);
             if (AddressOfDeparture != null) order.AddressOfDeparture = AddressOfDeparture;
             if (DateOfArrival != null) order.DateOfArrival = (DateTime)DateOfArrival;
             if (DateOfDeparture != null) order.DateOfDeparture = (DateTime)DateOfDeparture;
+            order.Updated = DateTime.Now;
             _context.SaveChanges();
             return order;
         }

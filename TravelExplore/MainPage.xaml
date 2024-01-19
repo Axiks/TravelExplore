@@ -43,7 +43,10 @@
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
                                     <StackPanel>
-                                        <TextBlock Text="{x:Bind Path=ClientName}"/>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{x:Bind Path=ClientName}"/>
+                                            <TextBlock Text="{x:Bind Path=ClientSurname}" Margin="6,0,0,0"/>
+                                        </StackPanel>
                                         <TextBlock Text="{x:Bind Path=AddressOfDeparture}"/>
                                     </StackPanel>
                                 </Grid>
