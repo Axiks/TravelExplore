@@ -41,6 +41,14 @@ namespace TravelExplore
             DepartureDatePicker.MinYear = DateTimeOffset.Now;
         }
 
+        private void CurrentWindow_SizeChanged(object sender, Microsoft.UI.Xaml.SizeChangedEventArgs e)
+        {
+            if (e.NewSize.Width > 880)
+                VisualStateManager.GoToState(this, "DefaultState", false);
+            else
+                VisualStateManager.GoToState(this, "SmallState", false);
+        }
+
         private void arrivalDatePicker_SelectedDateChanged(DatePicker sender, DatePickerSelectedValueChangedEventArgs args)
         {
             if (ArrivalDatePicker.SelectedDate != null)
