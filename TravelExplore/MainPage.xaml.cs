@@ -45,7 +45,7 @@ namespace TravelExplore
 
         private void CurrentWindow_SizeChanged(object sender, Microsoft.UI.Xaml.SizeChangedEventArgs e)
         {
-            if (e.NewSize.Width > 780)
+            if (e.NewSize.Width > 680)
                 VisualStateManager.GoToState(this, "DefaultState", false);
             else
                 VisualStateManager.GoToState(this, "SmallState", false);
