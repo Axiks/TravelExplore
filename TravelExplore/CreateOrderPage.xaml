@@ -41,16 +41,16 @@
 
             <StackPanel>
                 <Button x:Name="BackButton" Click="BackButton_Click"
-            Style="{StaticResource NavigationBackButtonNormalStyle}"
-            IsEnabled="{x:Bind Frame.CanGoBack, Mode=OneWay}" 
-            ToolTipService.ToolTip="Back"/>
-                <InfoBar
-            x:Name="FillFieldsInfoBar"
-            IsOpen="False"
-            IsIconVisible="True"
-            IsClosable="True"
-            Title="Warning"
-            Message="Fill in all fields" />
+                    Style="{StaticResource NavigationBackButtonNormalStyle}"
+                    IsEnabled="{x:Bind Frame.CanGoBack, Mode=OneWay}" 
+                    ToolTipService.ToolTip="Back"/>
+                        <InfoBar
+                    x:Name="FillFieldsInfoBar"
+                    IsOpen="False"
+                    IsIconVisible="True"
+                    IsClosable="True"
+                    Title="Warning"
+                    Message="Fill in all fields" />
 
                 <TextBlock x:Name="pageTitle" Text="Create offer"
             Margin="16" Style="{StaticResource TitleTextBlockStyle}"/>

@@ -7,67 +7,90 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    SizeChanged="CurrentWindow_SizeChanged">
 
     <Page.Resources>
         <local:TimeConverterHelper x:Key="TimeConverter"/>
     </Page.Resources>
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+    <ScrollView>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="DefaultState">
+                    <Storyboard>
+                    </Storyboard>
+                </VisualState>
 
-        <StackPanel>
-            <Button x:Name="BackButton" Click="ExitButton_Click"
-              Style="{StaticResource NavigationBackButtonNormalStyle}"
-              IsEnabled="{x:Bind Frame.CanGoBack, Mode=OneWay}" 
-              ToolTipService.ToolTip="Back"/>
-            <InfoBar
-              x:Name="FillFieldsInfoBar"
-              IsOpen="False"
-              IsIconVisible="True"
-              IsClosable="True"
-              Title="Warning"
-              Message="Fill in all fields" />
+                <VisualState x:Name="SmallState">
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames
+                      Storyboard.TargetProperty="StackPanel.Orientation"
+                      Storyboard.TargetName="FormStackPanel">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Vertical"/>
+                        </ObjectAnimationUsingKeyFrames>
+                    </Storyboard>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
-            <TextBlock x:Name="pageTitle" Text="Offer update"
-              Margin="16" Style="{StaticResource TitleTextBlockStyle}"/>
+            <StackPanel>
+                <Button x:Name="BackButton" Click="ExitButton_Click"
+                  Style="{StaticResource NavigationBackButtonNormalStyle}"
+                  IsEnabled="{x:Bind Frame.CanGoBack, Mode=OneWay}" 
+                  ToolTipService.ToolTip="Back"/>
+                        <InfoBar
+                  x:Name="FillFieldsInfoBar"
+                  IsOpen="False"
+                  IsIconVisible="True"
+                  IsClosable="True"
+                  Title="Warning"
+                  Message="Fill in all fields" />
 
-            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top">
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <StackPanel>
-                        <TextBlock Text="Customer info" Style="{StaticResource TitleTextBlockStyle}"/>
-                        <RelativePanel>
-                            <TextBox x:Name="Name" Header= "Name" Margin="0,24,0,0" MaxLength="32" Width="188" HorizontalAlignment="Left" InputScope="PersonalFullName"
-                                   Text="{x:Bind CreateOfferDTO.ClientName,Mode=TwoWay}"/>
-                            <TextBox x:Name="Surname" Header= "Surname" Margin="24,24,0,0" MaxLength="32" Width="188" HorizontalAlignment="Right" InputScope="PersonalFullName" RelativePanel.RightOf="Name"
-                                   Text="{x:Bind CreateOfferDTO.ClientSurname,Mode=TwoWay}"/>
-                        </RelativePanel>
-                        <TextBox x:Name="PhoneNumber" Header="Phone Number" Margin="0,24,0,0" MaxLength="15" Width="400" HorizontalAlignment="Left" InputScope="TelephoneNumber"
-                               Text="{x:Bind CreateOfferDTO.ClientTelephoneNumber,Mode=TwoWay}"/>
-                        <TextBox x:Name="Email" Header="Email" Margin="0,24,0,0" MaxLength="50" Width="400" HorizontalAlignment="Left" InputScope="EmailNameOrAddress"
-                               Text="{x:Bind CreateOfferDTO.ClientEmail,Mode=TwoWay}"/>
-                        <TextBox x:Name="Address" Header="Residence" PlaceholderText="Address" Margin="0,24,0,0" MaxLength="50" Width="400" HorizontalAlignment="Left" InputScope="EmailNameOrAddress"
-                               Text="{x:Bind CreateOfferDTO.ClientAddress,Mode=TwoWay}"/>
+                <TextBlock x:Name="pageTitle" Text="Offer update"
+          Margin="16" Style="{StaticResource TitleTextBlockStyle}"/>
+
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top">
+                    
+                    <StackPanel x:Name="FormStackPanel" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <StackPanel Margin="24,24">
+                            <TextBlock Text="Customer info" Style="{StaticResource TitleTextBlockStyle}"/>
+                            <RelativePanel>
+                                <TextBox x:Name="Name" Header= "Name" Margin="0,24,0,0" MaxLength="32" Width="188" HorizontalAlignment="Left" InputScope="PersonalFullName"
+                               Text="{x:Bind CreateOfferDTO.ClientName,Mode=TwoWay}"/>
+                                <TextBox x:Name="Surname" Header= "Surname" Margin="24,24,0,0" MaxLength="32" Width="188" HorizontalAlignment="Right" InputScope="PersonalFullName" RelativePanel.RightOf="Name"
+                               Text="{x:Bind CreateOfferDTO.ClientSurname,Mode=TwoWay}"/>
+                            </RelativePanel>
+                            <TextBox x:Name="PhoneNumber" Header="Phone Number" Margin="0,24,0,0" MaxLength="15" Width="400" HorizontalAlignment="Left" InputScope="TelephoneNumber"
+                           Text="{x:Bind CreateOfferDTO.ClientTelephoneNumber,Mode=TwoWay}"/>
+                            <TextBox x:Name="Email" Header="Email" Margin="0,24,0,0" MaxLength="50" Width="400" HorizontalAlignment="Left" InputScope="EmailNameOrAddress"
+                           Text="{x:Bind CreateOfferDTO.ClientEmail,Mode=TwoWay}"/>
+                            <TextBox x:Name="Address" Header="Residence" PlaceholderText="Address" Margin="0,24,0,0" MaxLength="50" Width="400" HorizontalAlignment="Left" InputScope="EmailNameOrAddress"
+                           Text="{x:Bind CreateOfferDTO.ClientAddress,Mode=TwoWay}"/>
+                        </StackPanel>
+                        <StackPanel Margin="24,24">
+                            <TextBlock Text="Order info" Style="{StaticResource TitleTextBlockStyle}"/>
+
+                            <DatePicker x:Name="ArrivalDatePicker" Header="Arrival" Margin="0,24,0,0" Width="400" HorizontalAlignment="Left" SelectedDateChanged="arrivalDatePicker_SelectedDateChanged"
+                              Date="{x:Bind CreateOfferDTO.DateOfArrival, Mode=TwoWay, Converter={StaticResource TimeConverter}}"/>
+                            <TextBox x:Name="AddressOfDeparture" Header="Departure" PlaceholderText="Address" Margin="0,24,0,0" MaxLength="50" Width="400" HorizontalAlignment="Left" InputScope="EmailNameOrAddress"
+                           Text="{x:Bind CreateOfferDTO.AddressOfDeparture,Mode=TwoWay}"/>
+                            <DatePicker x:Name="DepartureDatePicker" Margin="0,24,0,0" Width="400 " HorizontalAlignment="Left"
+                              Date="{x:Bind CreateOfferDTO.DateOfDeparture, Mode=TwoWay, Converter={StaticResource TimeConverter}}"/>
+                        </StackPanel>
                     </StackPanel>
-                    <StackPanel Margin="24,0,0,0">
-                        <TextBlock Text="Order info" Style="{StaticResource TitleTextBlockStyle}"/>
-
-                        <DatePicker x:Name="ArrivalDatePicker" Header="Arrival" Margin="0,24,0,0" Width="400" HorizontalAlignment="Left" SelectedDateChanged="arrivalDatePicker_SelectedDateChanged"
-                                  Date="{x:Bind CreateOfferDTO.DateOfArrival, Mode=TwoWay, Converter={StaticResource TimeConverter}}"/>
-                        <TextBox x:Name="AddressOfDeparture" Header="Departure" PlaceholderText="Address" Margin="0,24,0,0" MaxLength="50" Width="400" HorizontalAlignment="Left" InputScope="EmailNameOrAddress"
-                               Text="{x:Bind CreateOfferDTO.AddressOfDeparture,Mode=TwoWay}"/>
-                        <DatePicker x:Name="DepartureDatePicker" Margin="0,24,0,0" Width="400 " HorizontalAlignment="Left"
-                                  Date="{x:Bind CreateOfferDTO.DateOfDeparture, Mode=TwoWay, Converter={StaticResource TimeConverter}}"/>
+                    
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="24">
+                        <Button Content="Save" Margin="8,0,0,0" Click="SaveButton_Click"/>
                     </StackPanel>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="24">
-                    <Button Content="Save" Margin="8,0,0,0" Click="SaveButton_Click"/>
-                </StackPanel>
+
             </StackPanel>
-
-        </StackPanel>
-    </Grid>
+        </Grid>
+    </ScrollView>
 </Page>
