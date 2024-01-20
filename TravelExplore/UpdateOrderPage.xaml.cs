@@ -59,7 +59,7 @@ namespace TravelExplore
             CreateOfferDTO.ClientName = parameters.ClientName;
             CreateOfferDTO.ClientSurname = parameters.ClientSurname;
             CreateOfferDTO.ClientAddress = parameters.ClientAddress;
-            CreateOfferDTO.ClientTelephoneNumber = Int32.Parse(parameters.ClientTelephoneNumber);
+            CreateOfferDTO.ClientTelephoneNumber = parameters.ClientTelephoneNumber;
             CreateOfferDTO.ClientEmail = parameters.ClientEmail;
             CreateOfferDTO.AddressOfDeparture = parameters.AddressOfDeparture;
             CreateOfferDTO.DateOfDeparture = DateTime.Parse(parameters.DateOfDeparture);

@@ -76,7 +76,7 @@ namespace TravelExplore
             if (CreateOfferDTO.ClientSurname == null) CreateOfferDTO.ClientSurname = RandomString(10);
             if (CreateOfferDTO.ClientEmail == null) CreateOfferDTO.ClientEmail = RandomString(16);
             if (CreateOfferDTO.ClientAddress == null) CreateOfferDTO.ClientAddress = RandomString(36);
-            if (CreateOfferDTO.ClientTelephoneNumber == 0) CreateOfferDTO.ClientTelephoneNumber = random.Next(1000000000);
+            if (CreateOfferDTO.ClientTelephoneNumber == null) CreateOfferDTO.ClientTelephoneNumber = random.Next(1000000000).ToString();
             if (CreateOfferDTO.AddressOfDeparture == null) CreateOfferDTO.AddressOfDeparture = RandomString(36);
 
         }

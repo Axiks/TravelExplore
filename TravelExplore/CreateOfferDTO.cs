@@ -11,7 +11,7 @@ namespace TravelExplore
     {
         private String _clientName;
         private String _clientSurname;
-        private int _clientTelephoneNumber;
+        private String _clientTelephoneNumber;
         private String _clientEmail;
         private String _clientAddress;
 
@@ -39,7 +39,7 @@ namespace TravelExplore
             }
         }
 
-        public int ClientTelephoneNumber
+        public String ClientTelephoneNumber
         {
             get { return this._clientTelephoneNumber; }
             set

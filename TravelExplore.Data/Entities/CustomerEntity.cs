@@ -11,7 +11,7 @@ namespace TravelExplore.Data.Entities
         public int Id { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
-        public int? Telephonenumber { get; set; }
+        public string? Telephonenumber { get; set; }
         public string? Email { get; set; }
         public string? Address { get; set; }
         public List<OrderEntity> Orders { get; set; }

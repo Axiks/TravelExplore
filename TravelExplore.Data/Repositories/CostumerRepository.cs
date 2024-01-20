@@ -17,7 +17,7 @@ namespace TravelExplore.Data.Repositories
             _context = context;
         }
 
-        public CustomerEntity CreateCustomer(string name, string surname, string email, string? address, int? telephonenumber)
+        public CustomerEntity CreateCustomer(string name, string surname, string email, string? address, string? telephonenumber)
         {
             var customer = new CustomerEntity { Name = name, Surname = surname, Email = email, Address = address, Telephonenumber = telephonenumber };
             _context.Add(customer);
@@ -31,7 +31,7 @@ namespace TravelExplore.Data.Repositories
             return customer;
         }
 
-        public CustomerEntity UpdateCustomer(int customerId, string? name, string? surname, string? email, string? address, int? telephonenumber)
+        public CustomerEntity UpdateCustomer(int customerId, string? name, string? surname, string? email, string? address, string? telephonenumber)
         {
             var customer = _context.Customers.First(x => x.Id == customerId);
             if(name != null) customer.Name = name;
