@@ -37,6 +37,14 @@ namespace TravelExplore
             _orderProvider = singletonOrderMonitor.OrderProvider;
         }
 
+        private void CurrentWindow_SizeChanged(object sender, Microsoft.UI.Xaml.SizeChangedEventArgs e)
+        {
+            if (e.NewSize.Width > 780)
+                VisualStateManager.GoToState(this, "DefaultState", false);
+            else
+                VisualStateManager.GoToState(this, "SmallState", false);
+        }
+
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);

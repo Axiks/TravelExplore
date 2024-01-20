@@ -7,9 +7,35 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    SizeChanged="CurrentWindow_SizeChanged">
 
     <ScrollView>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="DefaultState">
+                    <Storyboard>
+                    </Storyboard>
+                </VisualState>
+
+                <VisualState x:Name="SmallState">
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames
+                          Storyboard.TargetProperty="Grid.Visibility"
+                          Storyboard.TargetName="myHorizontalOfferInfoGrid">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed"/>
+                        </ObjectAnimationUsingKeyFrames>
+
+                        <ObjectAnimationUsingKeyFrames
+                          Storyboard.TargetProperty="Grid.Visibility"
+                          Storyboard.TargetName="myVerticalOfferInfoGrid">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Visible"/>
+                        </ObjectAnimationUsingKeyFrames>
+                    </Storyboard>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
@@ -38,14 +64,14 @@
                         <TextBlock Text="{x:Bind OfferData.DateOfUpdatesOffer}" Margin="8,0,0,0"/>
                     </StackPanel>
                 </StackPanel>
-
             </Grid>
 
-            <Grid Grid.Row="1" Padding="16">
+            <Grid x:Name="myHorizontalOfferInfoGrid" Grid.Row="1" Padding="16" Visibility="Visible">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
+
                 <StackPanel Grid.Column="0" VerticalAlignment="Top">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="{x:Bind OfferData.ClientName}" FontSize="36" Margin="0,0,8,0"/>
@@ -66,6 +92,55 @@
                 </StackPanel>
 
                 <StackPanel Grid.Column="1" VerticalAlignment="Top">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <TextBlock Text="Departure" FontSize="24" />
+                        <SymbolIcon Symbol="57617" Margin="8,0,0,0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,16,0,0">
+                        <SymbolIcon Symbol="57633"/>
+                        <TextBlock Text="{x:Bind OfferData.DateOfDeparture}" Margin="8,0,0,0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,16,0,0">
+                        <SymbolIcon Symbol="57796"/>
+                        <TextBlock Text="{x:Bind OfferData.AddressOfDeparture}" Margin="8,0,0,0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,32,0,0">
+                        <TextBlock Text="Arrival" FontSize="24" />
+                        <SymbolIcon Symbol="57618" Margin="8,0,0,0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,16,0,0">
+                        <SymbolIcon Symbol="57633"/>
+                        <TextBlock Text="{x:Bind OfferData.DateOfArrival}" Margin="8,0,0,0"/>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+            
+            <Grid x:Name="myVerticalOfferInfoGrid" Grid.Row="1" Padding="16" Visibility="Collapsed">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="0" VerticalAlignment="Top">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{x:Bind OfferData.ClientName}" FontSize="36" Margin="0,0,8,0"/>
+                        <TextBlock Text="{x:Bind OfferData.ClientSurname}" FontSize="36"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,16,0,0">
+                        <SymbolIcon Symbol="57658"/>
+                        <TextBlock Text="{x:Bind OfferData.ClientTelephoneNumber}" Margin="8,0,0,0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,16,0,0">
+                        <SymbolIcon Symbol="57704"/>
+                        <TextBlock Text="{x:Bind OfferData.ClientEmail}" Margin="8,0,0,0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,16,0,0">
+                        <SymbolIcon Symbol="57795"/>
+                        <TextBlock Text="{x:Bind OfferData.ClientAddress}" Margin="8,0,0,0"/>
+                    </StackPanel>
+                </StackPanel>
+
+                <StackPanel Grid.Row="1" VerticalAlignment="Top" Margin="0,32,0,0"  >
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                         <TextBlock Text="Departure" FontSize="24" />
                         <SymbolIcon Symbol="57617" Margin="8,0,0,0"/>

@@ -11,6 +11,7 @@ using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -42,6 +43,14 @@ namespace TravelExplore
             this.InitializeComponent();
         }
 
+        private void CurrentWindow_SizeChanged(object sender, Microsoft.UI.Xaml.SizeChangedEventArgs e)
+        {
+            if (e.NewSize.Width > 780)
+                VisualStateManager.GoToState(this, "DefaultState", false);
+            else
+                VisualStateManager.GoToState(this, "SmallState", false);
+        }
+
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
@@ -68,12 +77,13 @@ namespace TravelExplore
         {
             Frame.Navigate(typeof(CreateOrderPage));
         }
-        
+
         private void orderList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             _mainPageParams.SelectedOrderIndex = orderListView.SelectedIndex;
 
-            if (_mainPageParams.SelectedOrderIndex >= 0) {
+            if (_mainPageParams.SelectedOrderIndex >= 0)
+            {
                 OfferDataFrame.Navigate(typeof(OfferInfoPage), MyData[_mainPageParams.SelectedOrderIndex]);
                 return;
             };

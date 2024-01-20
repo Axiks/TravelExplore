@@ -8,57 +8,82 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"  xmlns:models="using:TravelExplore"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    SizeChanged="CurrentWindow_SizeChanged">
 
     <Grid>
-        <SplitView IsPaneOpen="True"
-           DisplayMode="Inline"
-           OpenPaneLength="296">
-            <SplitView.Pane>
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <StackPanel Grid.Row="0"  Margin="8,8,0,0">
-                        <Button x:Name="myButton" Click="CreateOrderButton_Click" >
-                            <StackPanel Orientation="Horizontal" Margin="2">
-                                <SymbolIcon Symbol="57609"/>
-                                <TextBlock Text="New travel" Margin="8,0,0,0"/>
-                            </StackPanel>
-                        </Button>
-                    </StackPanel>
-                    <ListView x:Name="orderListView"
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="DefaultState">
+                    <Storyboard>
+                    </Storyboard>
+                </VisualState>
+
+                <VisualState x:Name="SmallState">
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames
+                            Storyboard.TargetProperty="Frame.Visibility"
+                            Storyboard.TargetName="OfferDataFrame">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed"/>
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames
+                            Storyboard.TargetProperty="ColumnDefinition.Width"
+                            Storyboard.TargetName="myMainGridSelectList">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="*"/>
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames
+                            Storyboard.TargetProperty="ColumnDefinition.Width"
+                            Storyboard.TargetName="myContentGridSelectList">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="auto"/>
+                        </ObjectAnimationUsingKeyFrames>
+                    </Storyboard>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="296" x:Name="myMainGridSelectList"/>
+                <ColumnDefinition Width="*" x:Name="myContentGridSelectList"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0" Background="{ThemeResource LayerFillColorDefaultBrush}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0"  Margin="8,8,0,0">
+                    <Button x:Name="myButton" Click="CreateOrderButton_Click" >
+                        <StackPanel Orientation="Horizontal" Margin="2">
+                            <SymbolIcon Symbol="57609"/>
+                            <TextBlock Text="New travel" Margin="8,0,0,0"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+                <ListView x:Name="orderListView"
                               Grid.Row="1"
                               ItemsSource="{x:Bind MyData, Mode=OneWay}"
                               HorizontalContentAlignment="Stretch"
                               VerticalAlignment="Stretch"
                               ScrollViewer.VerticalScrollMode="Enabled"
                               SelectionChanged="orderList_SelectionChanged">
-                        <ListView.ItemTemplate>
-                            <DataTemplate x:DataType="models:OfferViewModel">
-                                <Grid Height="auto" Width="296" Margin="6">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <StackPanel>
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="{x:Bind Path=ClientName}"/>
-                                            <TextBlock Text="{x:Bind Path=ClientSurname}" Margin="6,0,0,0"/>
-                                        </StackPanel>
-                                        <TextBlock Text="{x:Bind Path=AddressOfDeparture}"/>
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="models:OfferViewModel">
+                            <Grid Margin="6">
+                                <StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{x:Bind Path=ClientName}"/>
+                                        <TextBlock Text="{x:Bind Path=ClientSurname}" Margin="6,0,0,0"/>
                                     </StackPanel>
-                                </Grid>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                </Grid>
-            </SplitView.Pane>
-            <SplitView.Content>
-                <Frame x:Name="OfferDataFrame"></Frame>
-            </SplitView.Content>
-        </SplitView>
+                                    <TextBlock Text="{x:Bind Path=AddressOfDeparture}"/>
+                                </StackPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+            <Frame x:Name="OfferDataFrame" Grid.Column="1" Visibility="Visible"></Frame>
+        </Grid>
 
     </Grid>
 </Page>
