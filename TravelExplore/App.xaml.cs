@@ -19,6 +19,7 @@ using Windows.Devices.Enumeration;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using TravelExplore.Providers;
+using TravelExplore.Models;
 
 
 // To learn more about WinUI, the WinUI project structure,
@@ -49,8 +50,8 @@ namespace TravelExplore
         {
             this.InitializeComponent();
 
-            SingletonOrderProvider singletonOrderMonitor = SingletonOrderProvider.Instance;
-            OfferProvider OrderProvider = singletonOrderMonitor.OrderProvider;
+            SingletonOfferProvider singletonOrderMonitor = SingletonOfferProvider.Instance;
+            OfferProvider OrderProvider = singletonOrderMonitor.OfferProvider;
             OrderProvider.Subscribe(this);
         }
 
@@ -80,8 +81,8 @@ namespace TravelExplore
             // Ensure the MainWindow is active
             m_window.Activate();
 
-            SingletonOrderProvider singletonOrderMonitor = SingletonOrderProvider.Instance;
-            var OrderProvider = singletonOrderMonitor.OrderProvider;
+            SingletonOfferProvider singletonOrderMonitor = SingletonOfferProvider.Instance;
+            var OrderProvider = singletonOrderMonitor.OfferProvider;
             OrderProvider.LoadOrders();
         }
 

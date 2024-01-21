@@ -6,7 +6,7 @@
     xmlns:local="using:TravelExplore"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"  xmlns:models="using:TravelExplore"
+    xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"  xmlns:models="using:TravelExplore.Models"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     SizeChanged="CurrentWindow_SizeChanged">

@@ -18,6 +18,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Xml.Linq;
 using TravelExplore.Data;
 using TravelExplore.Data.Entities;
+using TravelExplore.Models;
 using TravelExplore.Providers;
 using Windows.ApplicationModel.Contacts;
 using Windows.Devices.Enumeration;
@@ -75,7 +76,7 @@ namespace TravelExplore
 
         private void CreateOrderButton_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(CreateOrderPage));
+            Frame.Navigate(typeof(CreateOfferPage));
         }
 
         private void orderList_SelectionChanged(object sender, SelectionChangedEventArgs e)

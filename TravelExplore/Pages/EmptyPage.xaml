@@ -11,8 +11,8 @@
 
     <Grid>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="16,52,0,0">
-            <SymbolIcon Symbol="57618"/>
-            <TextBlock Text="Select or create an offer" FontSize="24" Margin="16,0,0,0" />
+            <SymbolIcon Symbol="57618" Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"/>
+            <TextBlock Text="Select or create an offer" FontSize="24" Margin="16,0,0,0" Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}" />
         </StackPanel>
     </Grid>
 </Page>

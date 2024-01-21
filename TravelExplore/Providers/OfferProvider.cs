@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using TravelExplore.Data;
 using TravelExplore.Data.Entities;
 using TravelExplore.Data.Repositories;
+using TravelExplore.Models;
 
 namespace TravelExplore.Providers
 {
@@ -76,7 +77,7 @@ namespace TravelExplore.Providers
                 observer.OnNext(_offers);
         }
 
-        public void AddOffer(CreateOfferDTO offerDTO)
+        public void AddOffer(CreateOfferViewModel offerDTO)
         {
             var newCostumer = _costumerRepository.CreateCustomer(offerDTO.ClientName, offerDTO.ClientSurname, offerDTO.ClientEmail, offerDTO.ClientAddress, offerDTO.ClientTelephoneNumber);
             var newOrder = _orderRepository.CreateOrder(newCostumer.Id, offerDTO.AddressOfDeparture, offerDTO.DateOfArrival, offerDTO.DateOfDeparture);
@@ -88,7 +89,7 @@ namespace TravelExplore.Providers
                 observer.OnNext(_offers);
         }
 
-        public void UpdateOffer(UpdateOfferDTO offerDTO)
+        public void UpdateOffer(UpdateOfferViewModel offerDTO)
         {
             var order = _orderRepository.UpdateOrder(
                     offerDTO.OrderId,

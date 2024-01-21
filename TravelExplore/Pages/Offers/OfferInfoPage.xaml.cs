@@ -14,6 +14,7 @@ using System.Xml.Linq;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using TravelExplore.Providers;
+using TravelExplore.Models;
 
 
 // To learn more about WinUI, the WinUI project structure,
@@ -33,8 +34,8 @@ namespace TravelExplore
         {
             this.InitializeComponent();
 
-            SingletonOrderProvider singletonOrderMonitor = SingletonOrderProvider.Instance;
-            _orderProvider = singletonOrderMonitor.OrderProvider;
+            SingletonOfferProvider singletonOrderMonitor = SingletonOfferProvider.Instance;
+            _orderProvider = singletonOrderMonitor.OfferProvider;
         }
 
         private void CurrentWindow_SizeChanged(object sender, Microsoft.UI.Xaml.SizeChangedEventArgs e)
@@ -57,7 +58,7 @@ namespace TravelExplore
         private void updateButton_Click(object sender, RoutedEventArgs e)
         {
 
-            Frame.Navigate(typeof(UpdateOrderPage), OfferData);
+            Frame.Navigate(typeof(UpdateOfferPage), OfferData);
             //myDeleteButton.Content = "Clicked :D";
         }
 

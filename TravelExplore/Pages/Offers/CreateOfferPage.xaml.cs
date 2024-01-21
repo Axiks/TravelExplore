@@ -10,6 +10,8 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using TravelExplore.Data.Entities;
+using TravelExplore.Models;
+using TravelExplore.Providers;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 
@@ -21,27 +23,24 @@ namespace TravelExplore
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class CreateOrderPage : Page
+    public sealed partial class CreateOfferPage : Page
     {
-        public CreateOfferDTO CreateOfferDTO;
+        public CreateOfferViewModel CreateOfferDTO;
 
-        public CreateOrderPage()
+        public CreateOfferPage()
         {
             this.InitializeComponent();
 
-            CreateOfferDTO = new CreateOfferDTO();
+            CreateOfferDTO = new CreateOfferViewModel();
 
-            // Set minimum to the current year and maximum to five years from now.
-            //ArrivalDatePicker.SelectedDate = DateTimeOffset.Now;
             CreateOfferDTO.DateOfArrival = DateTime.Now;
             ArrivalDatePicker.MinYear = DateTimeOffset.Now;
-            // Set minimum to the current year and maximum to five years from now.
-            //DepartureDatePicker.SelectedDate = DateTimeOffset.Now;
+
             CreateOfferDTO.DateOfDeparture = DateTime.Now;
             DepartureDatePicker.MinYear = DateTimeOffset.Now;
         }
 
-        private void CurrentWindow_SizeChanged(object sender, Microsoft.UI.Xaml.SizeChangedEventArgs e)
+        private void CurrentWindow_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             if (e.NewSize.Width > 880)
                 VisualStateManager.GoToState(this, "DefaultState", false);
@@ -98,8 +97,8 @@ namespace TravelExplore
 
             if (FillFieldsInfoBar.IsOpen == true) return;
 
-            SingletonOrderProvider singletonOrderMonitor = SingletonOrderProvider.Instance;
-            var OrderMonitor = singletonOrderMonitor.OrderProvider;
+            SingletonOfferProvider singletonOrderMonitor = SingletonOfferProvider.Instance;
+            var OrderMonitor = singletonOrderMonitor.OfferProvider;
             OrderMonitor.AddOffer(CreateOfferDTO);
 
             App.TryGoBack();

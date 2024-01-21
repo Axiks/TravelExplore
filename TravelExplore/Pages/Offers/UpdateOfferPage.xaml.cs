@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using TravelExplore.Models;
 using TravelExplore.Providers;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -22,23 +23,23 @@ namespace TravelExplore
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class UpdateOrderPage : Page
+    public sealed partial class UpdateOfferPage : Page
     {
-        public UpdateOfferDTO CreateOfferDTO;
+        public UpdateOfferViewModel CreateOfferDTO;
         private OfferProvider _offerProvider;
 
-        public UpdateOrderPage()
+        public UpdateOfferPage()
         {
             this.InitializeComponent();
 
-            CreateOfferDTO = new UpdateOfferDTO();
+            CreateOfferDTO = new UpdateOfferViewModel();
             CreateOfferDTO.DateOfArrival = DateTime.Now;
             ArrivalDatePicker.MinYear = DateTimeOffset.Now;
             CreateOfferDTO.DateOfDeparture = DateTime.Now;
             DepartureDatePicker.MinYear = DateTimeOffset.Now;
 
-            SingletonOrderProvider singletonOrderMonitor = SingletonOrderProvider.Instance;
-            _offerProvider = singletonOrderMonitor.OrderProvider;
+            SingletonOfferProvider singletonOrderMonitor = SingletonOfferProvider.Instance;
+            _offerProvider = singletonOrderMonitor.OfferProvider;
         }
 
         private void CurrentWindow_SizeChanged(object sender, Microsoft.UI.Xaml.SizeChangedEventArgs e)
