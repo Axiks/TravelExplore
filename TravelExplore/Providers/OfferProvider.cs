@@ -23,7 +23,7 @@ namespace TravelExplore.Providers
             _observers = new List<IObserver<List<OfferViewModel>>>();
             _offers = new List<OfferViewModel>();
 
-            string connectionString = "Data Source=NEKO\\SQLEXPRESS; Initial Catalog=travel-explore-db; User Id=neko; Password=neko";
+            string connectionString = "Data Source=localhost; Initial Catalog=travel-explore-db; User Id=neko; Password=mek0Pass3";
             ApplicationDbContext applicationDbContext = new ApplicationDbContext(connectionString);
             //applicationDbContext.Database.EnsureDeleted();
             applicationDbContext.Database.EnsureCreated();

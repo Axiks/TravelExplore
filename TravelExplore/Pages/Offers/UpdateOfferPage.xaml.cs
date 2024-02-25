@@ -63,8 +63,8 @@ namespace TravelExplore
             CreateOfferDTO.ClientTelephoneNumber = parameters.ClientTelephoneNumber;
             CreateOfferDTO.ClientEmail = parameters.ClientEmail;
             CreateOfferDTO.AddressOfDeparture = parameters.AddressOfDeparture;
-            CreateOfferDTO.DateOfDeparture = DateTime.Parse(parameters.DateOfDeparture);
-            CreateOfferDTO.DateOfArrival = DateTime.Parse(parameters.DateOfArrival);
+            CreateOfferDTO.DateOfDeparture = DateTime.ParseExact(parameters.DateOfDeparture, "dd.MM.yyyy", System.Globalization.CultureInfo.InvariantCulture);
+            CreateOfferDTO.DateOfArrival = DateTime.ParseExact(parameters.DateOfArrival, "dd.MM.yyyy", System.Globalization.CultureInfo.InvariantCulture);
 
         }
 
